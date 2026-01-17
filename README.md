@@ -1,40 +1,104 @@
-# ZMarketing Agency Website
+# VIT DIGITAL - Premium Digital Marketing & Web Design Agency
 
-This is a modern, high-performance agency website built with React, Vite, and Tailwind CSS.
-It features a mobile-first design, smooth animations, and a professional aesthetic suitable for marketing agencies.
+![VIT DIGITAL Banner](https://via.placeholder.com/1200x400?text=VIT+DIGITAL+Agency)
 
-## Features
+**VIT DIGITAL** is a modern, high-performance agency website built to showcase premium digital marketing services, SEO solutions, and professional web design. Designed with a focus on user experience (UX), aesthetic appeal, and conversion optimization.
 
-- **Modern UI/UX**: Deep blue/black theme with electric blue and orange accents.
-- **Responsive**: Fully responsive design for all devices.
-- **Animations**: Entrance animations and scroll effects using Framer Motion.
-- **Sections**:
-  - Hero with abstract visuals.
-  - Services grid with hover effects.
-  - Portfolio with category filtering.
-  - Blog grid.
-  - Contact form with validation style.
-  - Footer with floating Call-to-Action buttons (Zalo/Phone).
+## 🚀 Features
 
-## Getting Started
+- **Modern & Responsive Design**: Fully responsive layout that looks stunning on desktop, tablet, and mobile devices.
+- **Dark Mode Support**: Seamless toggle between Light and Dark modes with persistent state.
+- **Multi-language Support (i18n)**: Built-in support for Vietnamese (vi) and English (en).
+- **Smooth Animations**: Powered by `framer-motion` for engaging scroll reveals and interactions.
+- **Service Detail Pages**: Dedicated templates for various services (SEO, Ads, Web Design, etc.) with rich content structures.
+- **Interactive Contact Forms**: Custom-styled forms with validation and specialized inputs for lead generation.
+- **News/Blog Section**: Dynamic news listing and detail pages.
+- **Pricing Tables**: Clear, attractive pricing comparisons.
 
-1.  **Install dependencies**:
+## 🛠 Tech Stack
+
+- **Core**: [React](https://reactjs.org/) (Vite)
+- **Styling**: [Tailwind CSS](https://tailwindcss.com/)
+- **Routing**: [React Router DOM](https://reactrouter.com/)
+- **Animations**: [Framer Motion](https://www.framer.com/motion/)
+- **Icons**: [Lucide React](https://lucide.dev/)
+- **State Management**: React Context API
+
+## 📂 Project Structure
+
+```bash
+zmarketing-agency/
+├── public/              # Static assets
+├── src/
+│   ├── components/      # Reusable UI components (Header, Footer, Hero, etc.)
+│   ├── context/         # App Context (Theme, Language)
+│   ├── pages/           # Main pages (Home, News, Contact, Pricing)
+│   │   └── services/    # Individual service pricing/detail pages
+│   ├── App.jsx          # Main App component & Routes
+│   ├── main.jsx         # Entry point
+│   └── index.css        # Global styles & Tailwind directives
+├── index.html           # HTML entry point
+├── package.json         # Project dependencies
+├── tailwind.config.js   # Tailwind configuration
+└── vite.config.js       # Vite configuration
+```
+
+## ⚡️ Getting Started
+
+Follow these steps to set up the project locally on your machine.
+
+### Prerequisites
+
+- **Node.js**: Version 18.0 or higher recommended.
+- **npm** or **yarn**.
+
+### Installation
+
+1.  **Clone the repository**
     ```bash
-    npm install
+    git clone https://github.com/tuutaii/vit_digital.git
+    cd vit_digital
     ```
 
-2.  **Start the development server**:
+2.  **Install dependencies**
+    ```bash
+    npm install
+    # or
+    yarn install
+    ```
+
+3.  **Start the development server**
     ```bash
     npm run dev
     ```
 
-3.  **Build for production**:
-    ```bash
-    npm run build
-    ```
+    The app will be available at `http://localhost:5173`.
 
-## Customization
+## 📦 Build for Production
 
--   **Colors**: Edit `tailwind.config.js` to change the `primary`, `secondary`, and `accent` colors.
--   **Content**: Edit the component files in `src/components/` to update text and images.
-# vit_digital
+To create a production-ready build:
+
+```bash
+npm run build
+```
+
+This will generate a `dist` folder containing optimized assets ready for deployment.
+
+## 🎨 Customization
+
+- **Colors**: Theme colors (primary, secondary, accent) are defined in `tailwind.config.js`.
+- **Translations**: Text strings can be modified in `src/context/AppContext.jsx`.
+- **Navigation**: Update menu items in `src/components/Header.jsx`.
+
+## 🤝 Contact
+
+**VIT DIGITAL TRADING SERVICE CO., LTD**
+
+- 📍 **Address**: 123 Business Avenue, Tech District, HCM City, Vietnam
+- 📞 **Hotline**: 0966 290 789
+- 📧 **Email**: hello@zmarketing.vn
+- 🌐 **Website**: [vitdigital.vn](https://vitdigital.vn)
+
+---
+
+© 2026 VIT DIGITAL. All rights reserved.
