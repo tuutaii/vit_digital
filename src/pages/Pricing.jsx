@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Check, Star, Zap, Shield, HelpCircle, ArrowRight, Layout, BarChart, ShoppingBag, Video, Smartphone, Globe, ChevronDown, ChevronUp, Megaphone as MegaphoneIcon, Search as SearchIcon, FileText as FileTextIcon, Target, TrendingUp } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import SubHero from '../components/SubHero';
 import { useApp } from '../context/AppContext';
 
 const Pricing = () => {
@@ -89,40 +90,12 @@ const Pricing = () => {
     return (
         <div className="bg-white dark:bg-[#020c1b] min-h-screen font-sans text-gray-800 dark:text-gray-200 transition-colors duration-300">
             {/* Hero Section */}
-            <section className="relative pt-32 pb-20 overflow-hidden bg-gradient-to-b from-gray-50 to-white dark:from-[#0a192f] dark:to-[#020c1b]">
-                {/* Abstract Background */}
-                <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
-                    <div className="absolute top-[-10%] left-[-10%] w-[600px] h-[600px] bg-secondary/10 rounded-full blur-[120px] opacity-40 mix-blend-multiply dark:mix-blend-screen"></div>
-                    <div className="absolute top-[20%] right-[-10%] w-[500px] h-[500px] bg-accent/10 rounded-full blur-[120px] opacity-40 mix-blend-multiply dark:mix-blend-screen"></div>
-                    <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-full h-[500px] bg-gradient-to-t from-white dark:from-[#020c1b] to-transparent z-10"></div>
-                </div>
-
-                <div className="container mx-auto px-4 relative z-10 text-center">
-                    <motion.span
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        className="inline-block py-1 px-4 rounded-full bg-accent/10 text-accent font-bold text-sm tracking-widest uppercase mb-4"
-                    >
-                        {t('pricingTitle').split('–')[0]}
-                    </motion.span>
-                    <motion.h1
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.1 }}
-                        className="text-5xl md:text-7xl font-serif font-bold mb-6 text-gray-900 dark:text-white leading-tight"
-                    >
-                        {t('pricingTitle').split('–')[1] || t('pricingTitle')}
-                    </motion.h1>
-                    <motion.p
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.2 }}
-                        className="text-lg md:text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto mb-10 font-light leading-relaxed"
-                    >
-                        {t('pricingSubtitle')}
-                    </motion.p>
-                </div>
-            </section>
+            <SubHero
+                tag={t('pricingTitle').split('–')[0]}
+                title={t('pricingTitle').split('–')[1] || t('pricingTitle')}
+                subtitle={t('pricingSubtitle')}
+                ctaText={t('registerNow')} // This might point to /lien-he default
+            />
 
             {/* Pricing Cards */}
             <section className="py-16">
@@ -135,7 +108,7 @@ const Pricing = () => {
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true }}
                                 transition={{ delay: index * 0.1 }}
-                                className={`relative flex flex-col p-8 rounded-2xl border ${pkg.recommended ? 'border-secondary shadow-[0_0_30px_rgba(100,255,218,0.15)] bg-white dark:bg-[#112240] scale-105 z-10' : 'border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-[#0a192f]'} hover:shadow-2xl transition-all duration-300`}
+                                className={`relative flex flex-col p-8 rounded-xl border ${pkg.recommended ? 'border-secondary shadow-[0_0_30px_rgba(100,255,218,0.15)] bg-white dark:bg-[#112240] scale-105 z-10' : 'border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-[#0a192f]'} hover:shadow-2xl transition-all duration-300`}
                             >
                                 {pkg.recommended && (
                                     <div className="absolute top-0 right-0 transform translate-x-2 -translate-y-2">
@@ -187,7 +160,7 @@ const Pricing = () => {
                                     initial={{ opacity: 0, scale: 0.95 }}
                                     whileInView={{ opacity: 1, scale: 1 }}
                                     whileHover={{ y: -5 }}
-                                    className="bg-white dark:bg-[#112240] p-6 rounded-xl shadow-md hover:shadow-xl border border-gray-100 dark:border-gray-800 transition-all flex items-start gap-4 h-full cursor-pointer group"
+                                    className="bg-white dark:bg-[#112240] p-6 rounded-xl shadow-md hover:shadow-xl border border-gray-200 dark:border-gray-700 transition-all flex items-start gap-4 h-full cursor-pointer group"
                                 >
                                     <div className="w-12 h-12 bg-secondary/10 rounded-lg flex items-center justify-center text-secondary shrink-0 group-hover:bg-accent/10 group-hover:text-accent transition-colors">
                                         {service.icon}
@@ -338,7 +311,7 @@ const Pricing = () => {
                     </div>
                     <div className="space-y-4">
                         {contextFAQs.map((faq, index) => (
-                            <div key={index} className="bg-white dark:bg-[#112240] rounded-xl border border-gray-200 dark:border-gray-800 overflow-hidden">
+                            <div key={index} className="bg-white dark:bg-[#112240] rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
                                 <button
                                     className="w-full px-6 py-4 text-left flex justify-between items-center font-bold text-gray-900 dark:text-white hover:bg-gray-50 dark:hover:bg-white/5 transition-colors"
                                     onClick={() => toggleFaq(index)}

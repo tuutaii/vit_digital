@@ -77,7 +77,7 @@ const ContactPage = () => {
           </div>
 
           {/* Form */}
-          <div className="w-full lg:w-2/3 bg-white dark:bg-[#112240] p-8 md:p-12 rounded-3xl shadow-2xl border border-gray-100 dark:border-gray-700 transition-colors duration-300 relative overflow-hidden">
+          <div className="w-full lg:w-2/3 bg-white dark:bg-[#112240] p-8 md:p-12 rounded-xl shadow-2xl border border-gray-200 dark:border-gray-700 transition-colors duration-300 relative overflow-hidden">
             <div className="absolute top-0 left-0 w-2 h-full bg-accent"></div>
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

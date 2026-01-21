@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { Calendar, User, ArrowRight, ArrowLeft } from 'lucide-react';
 import { HashLink } from 'react-router-hash-link';
 import { Link } from 'react-router-dom';
+import SubHero from '../components/SubHero';
 
 const newsData = [
   {
@@ -54,7 +55,7 @@ const newsData = [
     category: 'Ads',
     content: 'Nội dung chi tiết bài viết 5...'
   },
-    {
+  {
     id: 6,
     title: 'Branding: Xây Dựng Thương Hiệu Cảm Xúc',
     excerpt: 'Kết nối với khách hàng bằng câu chuyện thương hiệu chân thực và chạm đến trái tim.',
@@ -67,84 +68,79 @@ const newsData = [
 ];
 
 const News = () => {
-    useEffect(() => {
+  useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
   return (
     <div className="bg-white dark:bg-[#020c1b] min-h-screen pt-32 pb-20 transition-colors duration-300">
       <div className="container mx-auto px-4">
-        {/* Breadcrumb / Header */}
-        <div className="mb-12 text-center md:text-left">
-           <HashLink to="/#" className="inline-flex items-center gap-2 text-gray-500 hover:text-secondary mb-4 transition-colors">
-              <ArrowLeft size={16} /> Quay lại trang chủ
-           </HashLink>
-           <h1 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">Tin Tức & Sự Kiện</h1>
-           <p className="text-gray-600 dark:text-gray-400 text-lg max-w-2xl">
-              Cập nhật những xu hướng Marketing mới nhất, kiến thức chuyên ngành và câu chuyện thành công từ VIT DIGITAL.
-           </p>
-        </div>
+        <SubHero
+          tag="Blog"
+          title="Tin Tức & Sự Kiện"
+          subtitle="Cập nhật những xu hướng Marketing mới nhất, kiến thức chuyên ngành và câu chuyện thành công từ VIT DIGITAL."
+        />
 
         {/* Featured Post (Optional layout variation) */}
-        
+
         {/* Post Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {newsData.map((item) => (
-                <article key={item.id} className="group flex flex-col h-full bg-white dark:bg-[#112240] rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-100 dark:border-gray-800">
-                    {/* Image Container */}
-                    <div className="h-56 overflow-hidden relative">
-                        <div className="absolute top-4 left-4 z-10">
-                            <span className="inline-block px-3 py-1 bg-secondary text-dark text-xs font-bold uppercase tracking-wider rounded-md shadow-sm">
-                                {item.category}
-                            </span>
-                        </div>
-                        <img 
-                            src={item.image} 
-                            alt={item.title} 
-                            className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700" 
-                        />
-                         {/* Overlay effect */}
-                        <div className="absolute inset-0 bg-dark/20 group-hover:bg-dark/10 transition-colors" />
-                    </div>
+          {newsData.map((item) => (
+            <article key={item.id} className="group flex flex-col h-full bg-white dark:bg-[#112240] rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-200 dark:border-gray-700">
+              {/* Image Container */}
+              <div className="h-56 overflow-hidden relative">
+                <div className="absolute top-4 left-4 z-10">
+                  <span className="inline-block px-3 py-1 bg-secondary text-dark text-xs font-bold uppercase tracking-wider rounded-md shadow-sm">
+                    {item.category}
+                  </span>
+                </div>
+                <img
+                  src={item.image}
+                  alt={item.title}
+                  className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700"
+                />
+                {/* Overlay effect */}
+                <div className="absolute inset-0 bg-dark/20 group-hover:bg-dark/10 transition-colors" />
+              </div>
 
-                    {/* Content */}
-                    <div className="p-6 flex flex-col flex-grow">
-                        <div className="flex items-center justify-between text-xs text-gray-500 dark:text-gray-400 mb-4 font-medium">
-                            <span className="flex items-center gap-1.5 ">
-                                <Calendar size={14} className="text-secondary" /> 
-                                {item.date}
-                            </span>
-                             <span className="flex items-center gap-1.5">
-                                <User size={14} className="text-secondary" /> 
-                                {item.author}
-                            </span>
-                        </div>
+              {/* Content */}
+              <div className="p-6 flex flex-col flex-grow">
+                <div className="flex items-center justify-between text-xs text-gray-500 dark:text-gray-400 mb-4 font-medium">
+                  <span className="flex items-center gap-1.5 ">
+                    <Calendar size={14} className="text-secondary" />
+                    {item.date}
+                  </span>
+                  <span className="flex items-center gap-1.5">
+                    <User size={14} className="text-secondary" />
+                    {item.author}
+                  </span>
+                </div>
 
-                        <h3 className="text-xl font-bold mb-3 text-gray-900 dark:text-white leading-snug group-hover:text-secondary transition-colors line-clamp-2">
-                           <Link to={`/tin-tuc/${item.id}`}>{item.title}</Link>
-                        </h3>
-                        
-                        <p className="text-gray-600 dark:text-gray-400 text-sm mb-6 line-clamp-3 leading-relaxed">
-                            {item.excerpt}
-                        </p>
+                <h3 className="text-xl font-bold mb-3 text-gray-900 dark:text-white leading-snug group-hover:text-secondary transition-colors line-clamp-2">
+                  <Link to={`/tin-tuc/${item.id}`}>{item.title}</Link>
+                </h3>
 
-                        <div className="mt-auto pt-4 border-t border-gray-100 dark:border-gray-700">
-                            <Link to={`/tin-tuc/${item.id}`} className="inline-flex items-center gap-2 text-secondary font-bold text-sm tracking-wide group/btn hover:gap-3 transition-all">
-                                Đọc Thêm <ArrowRight size={16} className="group-hover/btn:translate-x-1 transition-transform" />
-                            </Link>
-                        </div>
-                    </div>
-                </article>
-            ))}
+                <p className="text-gray-600 dark:text-gray-400 text-sm mb-6 line-clamp-3 leading-relaxed">
+                  {item.excerpt}
+                </p>
+
+                <div className="mt-auto pt-4 border-t border-gray-100 dark:border-gray-700">
+                  <Link to={`/tin-tuc/${item.id}`} className="inline-flex items-center gap-2 text-secondary font-bold text-sm tracking-wide group/btn hover:gap-3 transition-all">
+                    Đọc Thêm <ArrowRight size={16} className="group-hover/btn:translate-x-1 transition-transform" />
+                  </Link>
+                </div>
+              </div>
+            </article>
+          ))}
         </div>
 
         {/* Pagination (Visual only) */}
         <div className="mt-16 flex justify-center gap-2">
-            <button className="w-10 h-10 flex items-center justify-center rounded-lg bg-secondary text-dark font-bold">1</button>
-            <button className="w-10 h-10 flex items-center justify-center rounded-lg bg-gray-200 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-gray-300 dark:hover:bg-gray-700 transition-colors">2</button>
-            <button className="w-10 h-10 flex items-center justify-center rounded-lg bg-gray-200 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-gray-300 dark:hover:bg-gray-700 transition-colors">3</button>
-            <span className="w-10 h-10 flex items-center justify-center text-gray-500">...</span>
-             <button className="w-10 h-10 flex items-center justify-center rounded-lg bg-gray-200 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-gray-300 dark:hover:bg-gray-700 transition-colors"><ArrowRight size={16} /></button>
+          <button className="w-10 h-10 flex items-center justify-center rounded-full bg-secondary text-dark font-bold">1</button>
+          <button className="w-10 h-10 flex items-center justify-center rounded-full bg-gray-200 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-gray-300 dark:hover:bg-gray-700 transition-colors">2</button>
+          <button className="w-10 h-10 flex items-center justify-center rounded-full bg-gray-200 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-gray-300 dark:hover:bg-gray-700 transition-colors">3</button>
+          <span className="w-10 h-10 flex items-center justify-center text-gray-500">...</span>
+          <button className="w-10 h-10 flex items-center justify-center rounded-full bg-gray-200 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-gray-300 dark:hover:bg-gray-700 transition-colors"><ArrowRight size={16} /></button>
         </div>
 
       </div>

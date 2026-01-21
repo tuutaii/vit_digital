@@ -39,10 +39,7 @@ const Header = () => {
   return (
     <header className={`fixed w-full z-50 transition-all duration-300`}>
       {/* Top Bar - Hidden on Mobile, Visible on Desktop */}
-      <div className={`hidden md:block py-3 text-xs md:text-sm border-b transition-colors duration-300 ${isScrolled
-        ? 'bg-white/95 dark:bg-primary/95 border-gray-200 dark:border-white/5 text-gray-800 dark:text-gray-300 backdrop-blur-md'
-        : 'bg-transparent border-white/10 text-gray-200'
-        }`}>
+      <div className={`hidden md:block py-3 text-xs md:text-sm border-b transition-colors duration-300 bg-white/95 dark:bg-primary/95 border-gray-200 dark:border-white/5 text-gray-800 dark:text-gray-300 backdrop-blur-md`}>
         <div className="container mx-auto px-6 flex justify-between items-center">
           <div className="font-medium tracking-wide opacity-80 text-black">
             {t('companyName')}
@@ -74,16 +71,14 @@ const Header = () => {
 
       {/* Main Navbar */}
       <div
-        className={`transition-all duration-300 ${isScrolled
-          ? 'bg-white/95 dark:bg-primary/95 backdrop-blur-md shadow-premium py-4'
-          : 'bg-transparent py-6'
-          }`}
+        className={`transition-all duration-300 bg-white/95 dark:bg-primary/95 backdrop-blur-md shadow-sm py-4`}
       >
         <div className="container mx-auto px-6 flex justify-between items-center">
           {/* Logo */}
-          <HashLink smooth to="/#top" className="text-3xl font-bold font-serif flex items-center gap-1 group">
-            <span className="text-gray-900 dark:text-white group-hover:text-accent transition-colors">VIT</span>
-            <span className="text-accent">DIGITAL</span>
+          {/* Logo */}
+          <HashLink smooth to="/#top" className="text-4xl md:text-5xl font-black font-serif flex items-center gap-0.5 group tracking-tighter leading-none">
+            <span className="text-gray-900 dark:text-white group-hover:text-accent transition-colors drop-shadow-sm">VIT</span>
+            <span className="text-accent drop-shadow-sm">DIGITAL</span>
           </HashLink>
 
           {/* Desktop Nav */}
@@ -132,20 +127,19 @@ const Header = () => {
           <div className="md:hidden flex items-center space-x-4">
             {/* Mobile Toggles */}
             <button
-              onClick={toggleTheme}
-              className={`p-1 transition-colors ${isScrolled ? 'text-dark dark:text-white' : 'text-white'}`}
+              className={`p-1 transition-colors text-dark dark:text-white`}
             >
               {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
             </button>
             <button
               onClick={toggleLanguage}
-              className={`font-bold text-sm transition-colors ${isScrolled ? 'text-dark dark:text-white' : 'text-white'}`}
+              className={`font-bold text-sm transition-colors text-dark dark:text-white`}
             >
               {language === 'vi' ? 'EN' : 'VN'}
             </button>
 
             <button
-              className={`focus:outline-none ${isScrolled ? 'text-dark dark:text-white' : 'text-white'}`}
+              className={`focus:outline-none text-dark dark:text-white`}
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             >
               {isMobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
