@@ -41,10 +41,10 @@ const Header = () => {
       {/* Top Bar - Hidden on Mobile, Visible on Desktop */}
       <div className={`hidden md:block py-3 text-xs md:text-sm border-b transition-colors duration-300 bg-white/95 dark:bg-primary/95 border-gray-200 dark:border-white/5 text-gray-800 dark:text-gray-300 backdrop-blur-md`}>
         <div className="container mx-auto px-6 flex justify-between items-center">
-          <div className="font-medium tracking-wide opacity-80 text-black">
+          <div className="font-medium tracking-wide opacity-80 text-gray-800 dark:text-gray-300">
             {t('companyName')}
           </div>
-          <div className="flex items-center space-x-6 text-black">
+          <div className="flex items-center space-x-6 text-gray-800 dark:text-gray-300">
             <a href="tel:0966290789" className="flex items-center hover:text-accent transition-colors">
               <Phone size={14} className="mr-2" />
               0966290789
@@ -74,7 +74,6 @@ const Header = () => {
         className={`transition-all duration-300 bg-white/95 dark:bg-primary/95 backdrop-blur-md shadow-sm py-4`}
       >
         <div className="container mx-auto px-6 flex justify-between items-center">
-          {/* Logo */}
           {/* Logo */}
           <HashLink smooth to="/#top" className="text-4xl md:text-5xl font-black font-serif flex items-center gap-0.5 group tracking-tighter leading-none">
             <span className="text-gray-900 dark:text-white group-hover:text-accent transition-colors drop-shadow-sm">VIT</span>
@@ -117,9 +116,17 @@ const Header = () => {
             ))}
             <Link
               to="/lien-he"
-              className="px-8 py-3 bg-accent text-white font-bold rounded-full hover:bg-accent-hover shadow-lg hover:shadow-accent/40 transition-all transform hover:-translate-y-0.5 text-sm uppercase tracking-wide"
+              className="group relative px-8 py-3 bg-accent text-white font-bold rounded-full hover:bg-accent-hover shadow-lg hover:shadow-accent/40 transition-all transform hover:-translate-y-0.5 text-sm uppercase tracking-wide overflow-hidden animate-pulse hover:animate-none"
             >
-              {t('getStarted')}
+              {/* Shimmer effect */}
+              <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></span>
+
+              {/* Glow rings */}
+              <span className="absolute inset-0 rounded-full bg-accent opacity-75 blur-md animate-ping"></span>
+              <span className="absolute inset-0 rounded-full bg-accent opacity-50 blur-lg"></span>
+
+              {/* Button content */}
+              <span className="relative z-10">{t('getStarted')}</span>
             </Link>
           </nav>
 
@@ -127,7 +134,9 @@ const Header = () => {
           <div className="md:hidden flex items-center space-x-4">
             {/* Mobile Toggles */}
             <button
-              className={`p-1 transition-colors text-dark dark:text-white`}
+              onClick={toggleTheme}
+              className={`p-1 transition-colors text-gray-900 dark:text-white`}
+              aria-label="Toggle Theme"
             >
               {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
             </button>

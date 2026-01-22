@@ -66,9 +66,6 @@ const Livestream = () => {
     }
   ];
 
-  // Import locally locally to avoid undefined error if not Lucide icon
-  // Re-mapping icons for items that used undefined vars above
-
   const processSteps = [
     { step: "01", title: "Nhận Brief", desc: "Xác định mục tiêu buổi Live (Bán hàng hay Branding), đối tượng xem và nền tảng." },
     { step: "02", title: "Lên Kịch Bản", desc: "Xây dựng kịch bản chương trình, chuẩn bị Deal sốc, Minigame và đạo cụ." },

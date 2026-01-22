@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { MapPin, Phone, Mail, Send, ChevronDown } from 'lucide-react';
-import { useApp } from '../context/AppContext'; // Adjust path if needed
-import { useLocation } from 'react-router-dom';
+import { MapPin, Phone, Mail, Send, ChevronDown, CheckCircle, Loader2 } from 'lucide-react';
+import { useApp } from '../context/AppContext';
 
 const ContactPage = () => {
   const { t } = useApp();
-  const location = useLocation();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -14,6 +12,8 @@ const ContactPage = () => {
     subject: '',
     message: ''
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitSuccess, setSubmitSuccess] = useState(false);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -23,10 +23,21 @@ const ContactPage = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    alert(t('messageSent'));
+    setIsSubmitting(true);
+
+    // Simulate API call
+    await new Promise(resolve => setTimeout(resolve, 1500));
+
+    setIsSubmitting(false);
+    setSubmitSuccess(true);
     setFormData({ name: '', email: '', phone: '', jobTitle: '', subject: '', message: '' });
+
+    // Hide success message after 5 seconds
+    setTimeout(() => {
+      setSubmitSuccess(false);
+    }, 5000);
   };
 
   return (
@@ -45,7 +56,7 @@ const ContactPage = () => {
 
             <div className="space-y-8">
               <div className="flex items-start gap-4">
-                <div className="w-14 h-14 bg-secondary/10 rounded-full flex items-center justify-center text-secondary shrink-0">
+                <div className="w-14 h-14 bg-secondary/10 dark:bg-accent/10 rounded-full flex items-center justify-center text-gray-900 dark:text-accent shrink-0">
                   <MapPin size={28} />
                 </div>
                 <div>
@@ -55,7 +66,7 @@ const ContactPage = () => {
               </div>
 
               <div className="flex items-start gap-4">
-                <div className="w-14 h-14 bg-secondary/10 rounded-full flex items-center justify-center text-secondary shrink-0">
+                <div className="w-14 h-14 bg-secondary/10 dark:bg-accent/10 rounded-full flex items-center justify-center text-gray-900 dark:text-accent shrink-0">
                   <Phone size={28} />
                 </div>
                 <div>
@@ -65,12 +76,12 @@ const ContactPage = () => {
               </div>
 
               <div className="flex items-start gap-4">
-                <div className="w-14 h-14 bg-secondary/10 rounded-full flex items-center justify-center text-secondary shrink-0">
+                <div className="w-14 h-14 bg-secondary/10 dark:bg-accent/10 rounded-full flex items-center justify-center text-gray-900 dark:text-accent shrink-0">
                   <Mail size={28} />
                 </div>
                 <div>
                   <h4 className="text-xl text-gray-900 dark:text-white font-bold mb-1 transition-colors">{t('email')}</h4>
-                  <p className="text-gray-600 dark:text-gray-400 transition-colors">hello@zmarketing.vn</p>
+                  <p className="text-gray-600 dark:text-gray-400 transition-colors">{t('companyEmail')}</p>
                 </div>
               </div>
             </div>
@@ -79,6 +90,15 @@ const ContactPage = () => {
           {/* Form */}
           <div className="w-full lg:w-2/3 bg-white dark:bg-[#112240] p-8 md:p-12 rounded-xl shadow-2xl border border-gray-200 dark:border-gray-700 transition-colors duration-300 relative overflow-hidden">
             <div className="absolute top-0 left-0 w-2 h-full bg-accent"></div>
+
+            {/* Success Message */}
+            {submitSuccess && (
+              <div className="mb-6 p-4 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-xl flex items-center gap-3 animate-in fade-in slide-in-from-top-2 duration-300">
+                <CheckCircle className="text-green-600 dark:text-green-400" size={24} />
+                <p className="text-green-800 dark:text-green-200 font-medium">{t('messageSent')}</p>
+              </div>
+            )}
+
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-2">
@@ -89,7 +109,8 @@ const ContactPage = () => {
                     name="name"
                     value={formData.name}
                     onChange={handleChange}
-                    className="w-full px-5 py-4 rounded-xl border border-gray-200 dark:border-gray-600 bg-gray-50 dark:bg-[#0a192f] text-gray-900 dark:text-white focus:border-accent focus:ring-2 focus:ring-accent/20 outline-none transition-all placeholder-gray-400 dark:placeholder-gray-500 shadow-inner"
+                    disabled={isSubmitting}
+                    className="w-full px-5 py-4 rounded-xl border border-gray-200 dark:border-gray-600 bg-gray-50 dark:bg-[#0a192f] text-gray-900 dark:text-white focus:border-accent focus:ring-2 focus:ring-accent/20 outline-none transition-all placeholder-gray-400 dark:placeholder-gray-500 shadow-inner disabled:opacity-50 disabled:cursor-not-allowed"
                     placeholder={t('phName')}
                     required
                   />
@@ -102,7 +123,8 @@ const ContactPage = () => {
                     name="email"
                     value={formData.email}
                     onChange={handleChange}
-                    className="w-full px-5 py-4 rounded-xl border border-gray-200 dark:border-gray-600 bg-gray-50 dark:bg-[#0a192f] text-gray-900 dark:text-white focus:border-accent focus:ring-2 focus:ring-accent/20 outline-none transition-all placeholder-gray-400 dark:placeholder-gray-500 shadow-inner"
+                    disabled={isSubmitting}
+                    className="w-full px-5 py-4 rounded-xl border border-gray-200 dark:border-gray-600 bg-gray-50 dark:bg-[#0a192f] text-gray-900 dark:text-white focus:border-accent focus:ring-2 focus:ring-accent/20 outline-none transition-all placeholder-gray-400 dark:placeholder-gray-500 shadow-inner disabled:opacity-50 disabled:cursor-not-allowed"
                     placeholder={t('phEmail')}
                     required
                   />
@@ -115,7 +137,8 @@ const ContactPage = () => {
                     name="phone"
                     value={formData.phone}
                     onChange={handleChange}
-                    className="w-full px-5 py-4 rounded-xl border border-gray-200 dark:border-gray-600 bg-gray-50 dark:bg-[#0a192f] text-gray-900 dark:text-white focus:border-accent focus:ring-2 focus:ring-accent/20 outline-none transition-all placeholder-gray-400 dark:placeholder-gray-500 shadow-inner"
+                    disabled={isSubmitting}
+                    className="w-full px-5 py-4 rounded-xl border border-gray-200 dark:border-gray-600 bg-gray-50 dark:bg-[#0a192f] text-gray-900 dark:text-white focus:border-accent focus:ring-2 focus:ring-accent/20 outline-none transition-all placeholder-gray-400 dark:placeholder-gray-500 shadow-inner disabled:opacity-50 disabled:cursor-not-allowed"
                     placeholder={t('phPhone')}
                     required
                   />
@@ -128,7 +151,8 @@ const ContactPage = () => {
                       name="jobTitle"
                       value={formData.jobTitle}
                       onChange={handleChange}
-                      className="w-full px-5 py-4 pr-12 rounded-xl border border-gray-200 dark:border-gray-600 bg-gray-50 dark:bg-[#0a192f] text-gray-900 dark:text-white focus:border-accent focus:ring-2 focus:ring-accent/20 outline-none transition-all appearance-none cursor-pointer shadow-inner font-medium text-base hover:border-gray-300 dark:hover:border-gray-500"
+                      disabled={isSubmitting}
+                      className="w-full px-5 py-4 pr-12 rounded-xl border border-gray-200 dark:border-gray-600 bg-gray-50 dark:bg-[#0a192f] text-gray-900 dark:text-white focus:border-accent focus:ring-2 focus:ring-accent/20 outline-none transition-all appearance-none cursor-pointer shadow-inner font-medium text-base hover:border-gray-300 dark:hover:border-gray-500 disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                       <option value="">{t('selectJobTitle')}</option>
                       <option value="owner">{t('jobOwner')}</option>
@@ -150,7 +174,8 @@ const ContactPage = () => {
                     name="subject"
                     value={formData.subject}
                     onChange={handleChange}
-                    className="w-full px-5 py-4 pr-10 rounded-xl border border-gray-200 dark:border-gray-600 bg-gray-50 dark:bg-[#0a192f] text-gray-900 dark:text-white focus:border-accent focus:ring-2 focus:ring-accent/20 outline-none transition-all appearance-none cursor-pointer shadow-inner"
+                    disabled={isSubmitting}
+                    className="w-full px-5 py-4 pr-10 rounded-xl border border-gray-200 dark:border-gray-600 bg-gray-50 dark:bg-[#0a192f] text-gray-900 dark:text-white focus:border-accent focus:ring-2 focus:ring-accent/20 outline-none transition-all appearance-none cursor-pointer shadow-inner disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     <option value="">{t('selectSubject')}</option>
                     <option value="marketing_tong_the">{t('subjMarketing')}</option>
@@ -172,8 +197,9 @@ const ContactPage = () => {
                   name="message"
                   value={formData.message}
                   onChange={handleChange}
+                  disabled={isSubmitting}
                   rows="5"
-                  className="w-full px-5 py-4 rounded-xl border border-gray-200 dark:border-gray-600 bg-gray-50 dark:bg-[#0a192f] text-gray-900 dark:text-white focus:border-accent focus:ring-2 focus:ring-accent/20 outline-none transition-all placeholder-gray-400 dark:placeholder-gray-500 resize-none shadow-inner"
+                  className="w-full px-5 py-4 rounded-xl border border-gray-200 dark:border-gray-600 bg-gray-50 dark:bg-[#0a192f] text-gray-900 dark:text-white focus:border-accent focus:ring-2 focus:ring-accent/20 outline-none transition-all placeholder-gray-400 dark:placeholder-gray-500 resize-none shadow-inner disabled:opacity-50 disabled:cursor-not-allowed"
                   placeholder={t('phMessage')}
                   required
                 ></textarea>
@@ -181,9 +207,19 @@ const ContactPage = () => {
 
               <button
                 type="submit"
-                className="w-full py-4 bg-accent text-white font-bold rounded-xl hover:bg-accent-hover shadow-lg hover:shadow-accent/40 transition-all transform hover:-translate-y-1 flex items-center justify-center gap-2 text-lg uppercase tracking-wide"
+                disabled={isSubmitting}
+                className="w-full py-4 bg-accent text-white font-bold rounded-xl hover:bg-accent-hover shadow-lg hover:shadow-accent/40 transition-all transform hover:-translate-y-1 flex items-center justify-center gap-2 text-lg uppercase tracking-wide disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
               >
-                {t('sendMessage')} <Send size={24} />
+                {isSubmitting ? (
+                  <>
+                    <Loader2 className="animate-spin" size={24} />
+                    Đang gửi...
+                  </>
+                ) : (
+                  <>
+                    {t('sendMessage')} <Send size={24} />
+                  </>
+                )}
               </button>
             </form>
           </div>

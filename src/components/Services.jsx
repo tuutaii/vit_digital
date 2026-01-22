@@ -30,13 +30,13 @@ const Services = () => {
       icon: <BarChart size={32} />,
       title: t('svcSEO'),
       description: t('svcSEODesc'),
-      link: '/dich-vu/seo-tong-the'
+      link: '/dich-vu/seo'
     },
     {
       icon: <Video size={32} />,
       title: t('svcTikTok'),
       description: t('svcTikTokDesc'),
-      link: '/dich-vu/tiktok-marketing'
+      link: '/dich-vu/tiktok'
     },
     {
       icon: <Globe size={32} />,

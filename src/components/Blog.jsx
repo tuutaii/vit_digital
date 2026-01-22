@@ -87,7 +87,7 @@ const Blog = () => {
         </div>
 
         <div className="mt-8 text-center md:hidden">
-          <Link to="/tin-tuc" className="inline-flex items-center gap-2 text-secondary hover:text-white transition-colors font-medium">
+          <Link to="/tin-tuc" className="inline-flex items-center gap-2 text-accent hover:text-accent-hover dark:hover:text-accent transition-colors font-medium">
             {t('viewAllPosts')} <ArrowRight size={20} />
           </Link>
         </div>

@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { Calendar, User, ArrowLeft, Clock, Share2 } from 'lucide-react';
+import { Calendar, User, ArrowLeft, Clock, Share2, Tag, Facebook, Twitter, Linkedin } from 'lucide-react';
 import { HashLink } from 'react-router-hash-link';
+import '../styles/article.css';
 
 // Mock data - In a real app, this would be fetched from an API
 const newsData = [
@@ -11,19 +12,27 @@ const newsData = [
     excerpt: 'Khám phá những chiến lược Marketing mới đang làm mưa làm gió trên thị trường, từ AI Content đến Livestream tương tác.',
     date: '12/10/2025',
     author: 'Tuấn Tài',
-    image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80',
+    readTime: '8 phút đọc',
+    image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1200&q=80',
     category: 'Chiến Lược',
+    tags: ['AI', 'Video Marketing', 'Livestream', 'Trends 2024'],
     content: `
-      <p>Năm 2024 đánh dấu sự chuyển mình mạnh mẽ của Digital Marketing với sự trỗi dậy của trí tuệ nhân tạo (AI) và các nền tảng video ngắn.</p>
+      <p>Năm 2024 đánh dấu sự chuyển mình mạnh mẽ của Digital Marketing với sự trỗi dậy của trí tuệ nhân tạo (AI) và các nền tảng video ngắn. Dưới đây là 5 xu hướng không thể bỏ qua nếu bạn muốn dẫn đầu thị trường.</p>
       
       <h2>1. AI Content - Trợ thủ đắc lực</h2>
-      <p>Không thể phủ nhận sức mạnh của AI trong việc sản xuất nội dung. Từ ChatGPT đến Midjourney, các công cụ này giúp marketers tiết kiệm hàng ngàn giờ làm việc mỗi năm.</p>
+      <p>Không thể phủ nhận sức mạnh của AI trong việc sản xuất nội dung. Từ ChatGPT đến Midjourney, các công cụ này giúp marketers tiết kiệm hàng ngàn giờ làm việc mỗi năm. Tuy nhiên, AI chỉ là công cụ hỗ trợ - yếu tố con người và sáng tạo vẫn là then chốt.</p>
       
       <h2>2. Short-form Video vẫn là vua</h2>
-      <p>TikTok, Reels, và YouTube Shorts tiếp tục thống trị thời gian on-screen của người dùng. Các thương hiệu cần tập trung vào nội dung ngắn, súc tích và giải trí.</p>
+      <p>TikTok, Reels, và YouTube Shorts tiếp tục thống trị thời gian on-screen của người dùng. Các thương hiệu cần tập trung vào nội dung ngắn, súc tích và giải trí. Video dưới 60 giây có tỷ lệ tương tác cao gấp 3 lần so với video dài.</p>
       
       <h2>3. Livestream mua sắm (Shoppertainment)</h2>
-      <p>Sự kết hợp giữa mua sắm và giải trí đang bùng nổ. Người xem không chỉ muốn mua hàng, họ muốn được giải trí trong quá trình đó.</p>
+      <p>Sự kết hợp giữa mua sắm và giải trí đang bùng nổ. Người xem không chỉ muốn mua hàng, họ muốn được giải trí trong quá trình đó. TikTok Shop và Facebook Live Shopping đang tạo ra doanh thu khổng lồ cho các thương hiệu.</p>
+      
+      <h2>4. Personalization ở mức độ cao</h2>
+      <p>Khách hàng mong đợi trải nghiệm được cá nhân hóa. Từ email marketing đến quảng cáo, mọi thứ đều cần được tùy chỉnh dựa trên hành vi và sở thích của từng người dùng.</p>
+      
+      <h2>5. Sustainability Marketing</h2>
+      <p>Người tiêu dùng ngày càng quan tâm đến trách nhiệm xã hội và môi trường của thương hiệu. Các chiến dịch marketing xanh, bền vững không chỉ là trend mà đã trở thành yêu cầu bắt buộc.</p>
     `
   },
   {
@@ -32,14 +41,27 @@ const newsData = [
     excerpt: 'Hướng dẫn chi tiết quy trình SEO tổng thể "Mũ Trắng", an toàn và bền vững cho doanh nghiệp SMEs.',
     date: '28/09/2025',
     author: 'Minh Hạnh',
-    image: 'https://images.unsplash.com/photo-1432888498266-38ffec3eaf0a?auto=format&fit=crop&w=800&q=80',
+    readTime: '10 phút đọc',
+    image: 'https://images.unsplash.com/photo-1432888498266-38ffec3eaf0a?auto=format&fit=crop&w=1200&q=80',
     category: 'SEO',
+    tags: ['SEO', 'Google', 'Organic Traffic', 'White Hat'],
     content: `
-       <p>SEO không còn là cuộc chơi của spam link. Google ngày càng thông minh hơn và ưu tiên trải nghiệm người dùng.</p>
-       <h2>Tối ưu E-E-A-T</h2>
-       <p>Kinh nghiệm, Chuyên môn, Thẩm quyền và Độ tin cậy là 4 yếu tố then chốt để Google đánh giá chất lượng website của bạn.</p>
-       <h2>Technical SEO</h2>
-       <p>Đảm bảo website của bạn tải nhanh, thân thiện với di động và không có lỗi kỹ thuật là bước đầu tiên để chinh phục Google.</p>
+       <p>SEO không còn là cuộc chơi của spam link. Google ngày càng thông minh hơn và ưu tiên trải nghiệm người dùng. Dưới đây là quy trình SEO "Mũ Trắng" đã được kiểm chứng giúp hàng trăm website lên top Google.</p>
+       
+       <h2>Bước 1: Nghiên cứu từ khóa (Keyword Research)</h2>
+       <p>Đừng chỉ target từ khóa có volume cao. Hãy tìm những từ khóa "long-tail" có ý định mua hàng cao (high buying intent). Sử dụng công cụ như Ahrefs, SEMrush hoặc Google Keyword Planner để phân tích độ khó và cơ hội.</p>
+       
+       <h2>Bước 2: Tối ưu E-E-A-T</h2>
+       <p>Experience, Expertise, Authoritativeness, Trustworthiness - 4 yếu tố then chốt để Google đánh giá chất lượng website của bạn. Hãy đảm bảo nội dung được viết bởi chuyên gia, có nguồn trích dẫn uy tín và thông tin liên hệ rõ ràng.</p>
+       
+       <h2>Bước 3: Technical SEO</h2>
+       <p>Đảm bảo website của bạn tải nhanh (dưới 3 giây), thân thiện với di động (mobile-friendly), có cấu trúc URL rõ ràng, sitemap.xml và robots.txt chuẩn. Sử dụng Google Search Console để phát hiện và sửa lỗi kỹ thuật.</p>
+       
+       <h2>Bước 4: Content is King</h2>
+       <p>Viết nội dung chất lượng, giải quyết đúng vấn đề của người dùng. Độ dài tối thiểu 1500 từ cho bài viết blog, có hình ảnh minh họa, video nhúng và infographic. Cập nhật nội dung cũ định kỳ để giữ độ "tươi" của website.</p>
+       
+       <h2>Bước 5: Link Building tự nhiên</h2>
+       <p>Xây dựng backlink chất lượng từ các website uy tín trong ngành. Tránh mua link spam hoặc tham gia các mạng lưới link farm. Guest posting, PR và tạo nội dung viral là cách tốt nhất để có backlink tự nhiên.</p>
     `
   },
   {
@@ -48,12 +70,24 @@ const newsData = [
     excerpt: 'Tại sao TikTok Shop lại có sức hút mãnh liệt đến vậy? Cách tối ưu vận hành để đạt doanh thu ngàn đơn.',
     date: '15/09/2025',
     author: 'Hoàng Nam',
-    image: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&w=800&q=80',
+    readTime: '7 phút đọc',
+    image: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&w=1200&q=80',
     category: 'TikTok',
+    tags: ['TikTok Shop', 'E-commerce', 'Social Commerce', 'Livestream'],
     content: `
-       <p>TikTok Shop đang thay đổi hành vi mua sắm của người dùng tại Việt Nam.</p>
-       <h2>Mô hình Affiliate</h2>
-       <p>Tận dụng mạng lưới KOC/KSOL khổng lồ để bán hàng mà không cần bỏ chi phí quảng cáo cố định.</p>
+       <p>TikTok Shop đang thay đổi hành vi mua sắm của người dùng tại Việt Nam. Với hơn 50 triệu người dùng hoạt động hàng tháng, đây là cơ hội vàng cho các nhà bán lẻ.</p>
+       
+       <h2>Tại sao TikTok Shop lại "hot" đến vậy?</h2>
+       <p>Khác với các sàn TMĐT truyền thống, TikTok Shop tích hợp mua sắm ngay trong trải nghiệm giải trí. Người dùng xem video → thích sản phẩm → mua ngay không cần rời app. Tỷ lệ chuyển đổi cao gấp 5 lần so với Facebook Shop.</p>
+       
+       <h2>Mô hình Affiliate Marketing</h2>
+       <p>Tận dụng mạng lưới KOC/KSOL khổng lồ để bán hàng mà không cần bỏ chi phí quảng cáo cố định. Bạn chỉ trả hoa hồng khi có đơn hàng thành công. Một số shop đã đạt doanh thu 1 tỷ/tháng chỉ nhờ affiliate.</p>
+       
+       <h2>Livestream bán hàng hiệu quả</h2>
+       <p>Đầu tư vào kịch bản livestream chuyên nghiệp, MC có kỹ năng chốt đơn và deal sốc để kích thích mua hàng. Thời gian vàng để live là 19h-22h hàng ngày, khi người dùng thư giãn sau giờ làm việc.</p>
+       
+       <h2>Tối ưu sản phẩm và giá</h2>
+       <p>Sản phẩm bán chạy trên TikTok Shop thường là hàng tiêu dùng nhanh, giá dưới 500k, có tính viral cao. Hãy tạo combo deal hấp dẫn và flash sale để tăng độ khan hiếm.</p>
     `
   },
   {
@@ -62,19 +96,27 @@ const newsData = [
     excerpt: 'Website đẹp là chưa đủ. Hãy làm cho nó dễ sử dụng để giữ chân khách hàng lâu hơn.',
     date: '10/09/2025',
     author: 'Thanh Hà',
-    image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80',
+    readTime: '9 phút đọc',
+    image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1200&q=80',
     category: 'Design',
+    tags: ['UX Design', 'Website', 'User Experience', 'Conversion'],
     content: `
       <p>Trải nghiệm người dùng (UX) là yếu tố quyết định khách hàng có ở lại website của bạn hay không. Một website đẹp nhưng khó sử dụng sẽ khiến tỷ lệ thoát trang (bounce rate) tăng cao.</p>
       
-      <h2>Tốc độ tải trang</h2>
-      <p>Người dùng không có kiên nhẫn. Nếu website của bạn mất quá 3 giây để tải, bạn đã mất đi 40% khách hàng tiềm năng. Tối ưu hình ảnh, minified code, và sử dụng CDN là những việc cần làm ngay.</p>
+      <h2>Tốc độ tải trang - Yếu tố sống còn</h2>
+      <p>Người dùng không có kiên nhẫn. Nếu website của bạn mất quá 3 giây để tải, bạn đã mất đi 40% khách hàng tiềm năng. Tối ưu hình ảnh (WebP format), minified code, sử dụng CDN và lazy loading là những việc cần làm ngay.</p>
       
-      <h2>Mobile First</h2>
-      <p>Với hơn 70% lượng truy cập đến từ thiết bị di động, việc tối ưu giao diện mobile không còn là lựa chọn mà là bắt buộc. Hãy đảm bảo các nút bấm đủ lớn, font chữ dễ đọc và navigation mượt mà trên màn hình nhỏ.</p>
+      <h2>Mobile First - Không còn là lựa chọn</h2>
+      <p>Với hơn 70% lượng truy cập đến từ thiết bị di động, việc tối ưu giao diện mobile không còn là lựa chọn mà là bắt buộc. Hãy đảm bảo các nút bấm đủ lớn (tối thiểu 44x44px), font chữ dễ đọc (16px trở lên) và navigation mượt mà trên màn hình nhỏ.</p>
       
       <h2>Call To Action (CTA) Rõ Ràng</h2>
-      <p>Đừng để khách hàng phải đoán xem họ cần làm gì tiếp theo. Đặt các nút CTA (Mua ngay, Đăng ký, Liên hệ) ở vị trí nổi bật, màu sắc tương phản để thúc đẩy hành động.</p>
+      <p>Đừng để khách hàng phải đoán xem họ cần làm gì tiếp theo. Đặt các nút CTA (Mua ngay, Đăng ký, Liên hệ) ở vị trí nổi bật, màu sắc tương phản để thúc đẩy hành động. Sử dụng động từ hành động mạnh mẽ.</p>
+      
+      <h2>Navigation đơn giản</h2>
+      <p>Menu không nên quá 7 mục chính. Sử dụng breadcrumb để người dùng biết họ đang ở đâu. Thanh tìm kiếm phải dễ thấy và hoạt động tốt.</p>
+      
+      <h2>Form đơn giản hóa</h2>
+      <p>Chỉ hỏi những thông tin thực sự cần thiết. Mỗi field bổ sung làm giảm 10% tỷ lệ hoàn thành form. Sử dụng autofill, validation real-time và thông báo lỗi rõ ràng.</p>
     `
   },
   {
@@ -83,133 +125,191 @@ const newsData = [
     excerpt: 'Làm sao để tối ưu chi phí quảng cáo (CPM) mà vẫn đảm bảo tỷ lệ chuyển đổi (CR) cao?',
     date: '05/09/2025',
     author: 'Quốc Bảo',
-    image: 'https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=800&q=80',
+    readTime: '11 phút đọc',
+    image: 'https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=1200&q=80',
     category: 'Ads',
+    tags: ['Facebook Ads', 'Meta Ads', 'Performance Marketing', 'ROI'],
     content: `
       <p>Facebook Ads ngày càng đắt đỏ, nhưng vẫn là kênh quảng cáo hiệu quả nhất nếu biết cách làm. "Đắt xắt ra miếng" là câu nói chính xác cho tình hình hiện tại.</p>
       
-      <h2>Targeting chính xác</h2>
-      <p>Đừng đốt tiền vào tệp khách hàng quá rộng. Sử dụng Lookalike Audience và Custom Audience để tiếp cận những người thực sự quan tâm đến sản phẩm của bạn.</p>
+      <h2>Targeting chính xác - Đừng bắn phá tràn lan</h2>
+      <p>Đừng đốt tiền vào tệp khách hàng quá rộng. Sử dụng Lookalike Audience (1-3%) từ database khách hàng hiện tại và Custom Audience để retargeting những người đã tương tác với brand. Advantage+ Audience cũng là lựa chọn tốt cho người mới.</p>
       
-      <h2>Creative là vua</h2>
-      <p>Trong bối cảnh thuật toán thay đổi liên tục, nội dung quảng cáo (video, hình ảnh, text) đóng vai trò quan trọng hơn cả kỹ thuật setup. Hãy đầu tư sản xuất video ngắn, bắt trend và đánh trúng nỗi đau khách hàng.</p>
+      <h2>Creative là vua - Nội dung quyết định 80% thành công</h2>
+      <p>Trong bối cảnh thuật toán thay đổi liên tục, nội dung quảng cáo (video, hình ảnh, text) đóng vai trò quan trọng hơn cả kỹ thuật setup. Hãy đầu tư sản xuất video ngắn (15-30s), bắt trend và đánh trúng nỗi đau khách hàng trong 3 giây đầu tiên.</p>
       
-      <h2>Thử nghiệm A/B Testing</h2>
-      <p>Không có công thức chung cho mọi chiến dịch. Hãy liên tục thử nghiệm các mẫu quảng cáo, target khác nhau để tìm ra "công thức chiến thắng" (winning campaign) cho riêng bạn.</p>
+      <h2>Hook - Problem - Solution - CTA</h2>
+      <p>Công thức vàng cho video ads: Hook (thu hút chú ý) → Problem (nêu vấn đề) → Solution (giải pháp của bạn) → CTA (kêu gọi hành động). Đừng quên thêm caption vì 85% người xem video không bật tiếng.</p>
+      
+      <h2>Thử nghiệm A/B Testing liên tục</h2>
+      <p>Không có công thức chung cho mọi chiến dịch. Hãy liên tục thử nghiệm các mẫu quảng cáo, target khác nhau để tìm ra "công thức chiến thắng" (winning campaign) cho riêng bạn. Test ít nhất 3-5 creative mỗi campaign.</p>
+      
+      <h2>Tối ưu Landing Page</h2>
+      <p>Quảng cáo tốt nhưng landing page tệ = tiền bay. Đảm bảo landing page tải nhanh, message nhất quán với ads, form đơn giản và CTA rõ ràng. Tỷ lệ chuyển đổi landing page tốt là trên 5%.</p>
+      
+      <h2>Ngân sách và Bidding Strategy</h2>
+      <p>Bắt đầu với budget nhỏ (500k-1tr/ngày) để test. Khi tìm được winning campaign, scale dần dần (tăng 20-30%/ngày). Sử dụng Lowest Cost cho giai đoạn test và Cost Cap khi đã có dữ liệu.</p>
     `
   },
-    {
+  {
     id: 6,
     title: 'Branding: Xây Dựng Thương Hiệu Cảm Xúc',
     excerpt: 'Kết nối với khách hàng bằng câu chuyện thương hiệu chân thực và chạm đến trái tim.',
     date: '01/09/2025',
     author: 'Ngọc Lan',
-    image: 'https://images.unsplash.com/photo-1557804506-669a67965ba0?auto=format&fit=crop&w=800&q=80',
+    readTime: '8 phút đọc',
+    image: 'https://images.unsplash.com/photo-1557804506-669a67965ba0?auto=format&fit=crop&w=1200&q=80',
     category: 'Branding',
+    tags: ['Branding', 'Brand Story', 'Emotional Marketing', 'Brand Identity'],
     content: `
-      <p>Thương hiệu không chỉ là logo hay slogan. Thương hiệu là cảm xúc mà khách hàng có khi nghĩ về bạn.</p>
+      <p>Thương hiệu không chỉ là logo hay slogan. Thương hiệu là cảm xúc mà khách hàng có khi nghĩ về bạn. Trong thời đại thông tin quá tải, chỉ những thương hiệu chạm đến trái tim mới được nhớ đến.</p>
       
-      <h2>Kể chuyện (Storytelling)</h2>
+      <h2>Kể chuyện (Storytelling) - Vũ khí bí mật</h2>
       <p>Mọi người thích nghe kể chuyện. Hãy kể câu chuyện về sự ra đời của sản phẩm, về những khó khăn bạn đã vượt qua, hay về những giá trị mà bạn theo đuổi. Một câu chuyện hay sẽ chạm đến trái tim khách hàng dễ dàng hơn ngàn lời quảng cáo.</p>
       
-      <h2>Tính nhất quán</h2>
-      <p>Hãy đảm bảo sự nhất quán trong mọi điểm chạm thương hiệu (Brand Touchpoints): từ màu sắc, font chữ trên website, đến giọng văn trên fanpage, và thái độ phục vụ của nhân viên.</p>
+      <h2>Tính nhất quán - Chìa khóa thành công</h2>
+      <p>Hãy đảm bảo sự nhất quán trong mọi điểm chạm thương hiệu (Brand Touchpoints): từ màu sắc, font chữ trên website, đến giọng văn trên fanpage, và thái độ phục vụ của nhân viên. Sự nhất quán tạo nên sự tin tưởng.</p>
       
-      <h2>Tạo cộng đồng</h2>
-      <p>Xây dựng một cộng đồng những người yêu thích thương hiệu (Brand Lovers) là cách tốt nhất để marketing 0 đồng. Hãy lắng nghe và tương tác chân thành với họ.</p>
+      <h2>Brand Voice - Giọng nói riêng biệt</h2>
+      <p>Thương hiệu của bạn nói chuyện như thế nào? Chuyên nghiệp và trang trọng? Thân thiện và hài hước? Hay trẻ trung và năng động? Xác định brand voice rõ ràng và giữ nó xuyên suốt mọi nội dung.</p>
+      
+      <h2>Tạo cộng đồng - Marketing 0 đồng</h2>
+      <p>Xây dựng một cộng đồng những người yêu thích thương hiệu (Brand Lovers) là cách tốt nhất để marketing 0 đồng. Hãy lắng nghe và tương tác chân thành với họ. Tổ chức sự kiện offline, tạo group riêng và reward cho những fan trung thành.</p>
+      
+      <h2>Purpose-driven Brand</h2>
+      <p>Thương hiệu của bạn tồn tại để làm gì ngoài việc kiếm tiền? Người tiêu dùng Gen Z đặc biệt quan tâm đến mục đích và giá trị xã hội của thương hiệu. Hãy có một "purpose" rõ ràng và thực hiện nó một cách chân thành.</p>
     `
   }
 ];
 
 const NewsDetail = () => {
-    const { id } = useParams();
-    const post = newsData.find(item => item.id === parseInt(id));
+  const { id } = useParams();
+  const post = newsData.find(item => item.id === parseInt(id));
 
-    useEffect(() => {
-        window.scrollTo(0, 0);
-    }, [id]);
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [id]);
 
-    if (!post) {
-        return (
-            <div className="min-h-screen pt-32 pb-20 flex flex-col items-center justify-center container mx-auto px-4 text-center">
-                <h1 className="text-4xl font-bold mb-4">Bài viết không tồn tại</h1>
-                <Link to="/tin-tuc" className="text-secondary hover:underline">Quay lại trang tin tức</Link>
-            </div>
-        )
-    }
+  if (!post) {
+    return (
+      <div className="min-h-screen pt-32 pb-20 flex flex-col items-center justify-center container mx-auto px-4 text-center bg-white dark:bg-[#020c1b]">
+        <h1 className="text-4xl font-bold mb-4 text-gray-900 dark:text-white">Bài viết không tồn tại</h1>
+        <Link to="/tin-tuc" className="text-secondary hover:underline">Quay lại trang tin tức</Link>
+      </div>
+    )
+  }
 
   return (
     <div className="bg-white dark:bg-[#020c1b] min-h-screen pt-32 pb-20 transition-colors duration-300">
       <div className="container mx-auto px-4 max-w-4xl">
         {/* Breadcrumb / Back */}
         <div className="mb-8">
-           <Link to="/tin-tuc" className="inline-flex items-center gap-2 text-gray-500 hover:text-secondary transition-colors font-medium">
-              <ArrowLeft size={20} /> Quay lại tin tức
-           </Link>
+          <Link to="/tin-tuc" className="inline-flex items-center gap-2 text-gray-500 dark:text-gray-400 hover:text-secondary transition-colors font-medium">
+            <ArrowLeft size={20} /> Quay lại tin tức
+          </Link>
         </div>
 
         {/* Article Header */}
         <header className="mb-10">
-            <div className="flex items-center gap-4 mb-6">
-                <span className="inline-block px-3 py-1 bg-secondary/10 text-secondary text-sm font-bold uppercase tracking-wider rounded-full">
-                    {post.category}
-                </span>
-                <span className="flex items-center gap-1.5 text-sm text-gray-500">
-                     <Calendar size={14} /> {post.date}
-                </span>
-                 <span className="flex items-center gap-1.5 text-sm text-gray-500">
-                     <Clock size={14} /> 5 phút đọc
-                </span>
-            </div>
-            
-            <h1 className="text-3xl md:text-5xl font-bold text-gray-900 dark:text-white mb-8 leading-tight">
-                {post.title}
-            </h1>
+          <div className="flex flex-wrap items-center gap-4 mb-6">
+            <span className="inline-block px-4 py-2 bg-secondary/10 text-secondary text-sm font-bold uppercase tracking-wider rounded-full">
+              {post.category}
+            </span>
+            <span className="flex items-center gap-1.5 text-sm text-gray-500 dark:text-gray-400">
+              <Calendar size={14} /> {post.date}
+            </span>
+            <span className="flex items-center gap-1.5 text-sm text-gray-500 dark:text-gray-400">
+              <Clock size={14} /> {post.readTime}
+            </span>
+          </div>
 
-            <div className="flex items-center justify-between border-y border-gray-100 dark:border-gray-800 py-6">
-                 <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center">
-                        <User size={20} className="text-gray-500 dark:text-gray-400" />
-                    </div>
-                    <div>
-                        <p className="font-bold text-gray-900 dark:text-white text-sm">{post.author}</p>
-                        <p className="text-xs text-gray-500">Tác giả</p>
-                    </div>
-                 </div>
-                 <button className="flex items-center gap-2 text-gray-500 hover:text-secondary transition-colors">
-                     <Share2 size={20} /> <span className="hidden sm:inline">Chia sẻ</span>
-                 </button>
+          <h1 className="text-3xl md:text-5xl font-bold text-gray-900 dark:text-white mb-8 leading-tight font-serif">
+            {post.title}
+          </h1>
+
+          <div className="flex items-center justify-between border-y border-gray-100 dark:border-gray-800 py-6">
+            <div className="flex items-center gap-3">
+              <div className="w-12 h-12 rounded-full bg-gradient-to-br from-secondary to-accent flex items-center justify-center">
+                <User size={20} className="text-white" />
+              </div>
+              <div>
+                <p className="font-bold text-gray-900 dark:text-white text-sm">{post.author}</p>
+                <p className="text-xs text-gray-500 dark:text-gray-400">Tác giả</p>
+              </div>
             </div>
+            <button className="flex items-center gap-2 text-gray-500 dark:text-gray-400 hover:text-secondary transition-colors">
+              <Share2 size={20} /> <span className="hidden sm:inline">Chia sẻ</span>
+            </button>
+          </div>
         </header>
 
         {/* Featured Image */}
-        <div className="rounded-2xl overflow-hidden mb-12 shadow-xl">
-             <img src={post.image} alt={post.title} className="w-full h-auto object-cover" />
+        <div className="rounded-2xl overflow-hidden mb-12 shadow-2xl">
+          <img src={post.image} alt={post.title} className="w-full h-auto object-cover" loading="eager" />
         </div>
 
         {/* Article Content */}
-        <article className="prose prose-lg dark:prose-invert max-w-none 
-            prose-headings:font-bold prose-headings:text-gray-900 dark:prose-headings:text-white prose-headings:mb-4 prose-headings:mt-8
-            prose-h1:text-4xl prose-h2:text-3xl prose-h3:text-2xl
-            prose-p:text-gray-700 dark:prose-p:text-gray-300 prose-p:leading-8 prose-p:text-lg prose-p:mb-6
-            prose-a:text-secondary hover:prose-a:text-accent prose-a:no-underline
-            prose-strong:text-gray-900 dark:prose-strong:text-white prose-strong:font-bold
-            prose-img:rounded-xl prose-img:shadow-lg prose-img:my-8
-            prose-ul:list-disc prose-ul:pl-6 prose-ul:mb-6
-            prose-li:text-gray-700 dark:prose-li:text-gray-300 prose-li:mb-2
-        ">
-            <div dangerouslySetInnerHTML={{ __html: post.content }} />
+        <article className="article-content">
+          <div dangerouslySetInnerHTML={{ __html: post.content }} />
         </article>
-        
-        {/* Tags / CTA (Optional) */}
+
+        {/* Tags */}
+        <div className="mt-12 pt-8 border-t border-gray-100 dark:border-gray-800">
+          <h3 className="text-sm font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-4">Tags</h3>
+          <div className="flex flex-wrap gap-2">
+            {post.tags.map((tag, idx) => (
+              <span key={idx} className="inline-flex items-center gap-1 px-4 py-2 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 text-sm rounded-full hover:bg-secondary/10 hover:text-secondary transition-colors cursor-pointer">
+                <Tag size={14} />
+                {tag}
+              </span>
+            ))}
+          </div>
+        </div>
+
+        {/* Social Share */}
+        <div className="mt-8 pt-8 border-t border-gray-100 dark:border-gray-800">
+          <h3 className="text-sm font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-4">Chia sẻ bài viết</h3>
+          <div className="flex gap-3">
+            <button className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+              <Facebook size={18} />
+              <span className="hidden sm:inline">Facebook</span>
+            </button>
+            <button className="flex items-center gap-2 px-4 py-2 bg-sky-500 text-white rounded-lg hover:bg-sky-600 transition-colors">
+              <Twitter size={18} />
+              <span className="hidden sm:inline">Twitter</span>
+            </button>
+            <button className="flex items-center gap-2 px-4 py-2 bg-blue-700 text-white rounded-lg hover:bg-blue-800 transition-colors">
+              <Linkedin size={18} />
+              <span className="hidden sm:inline">LinkedIn</span>
+            </button>
+          </div>
+        </div>
+
+        {/* CTA */}
         <div className="mt-16 pt-8 border-t border-gray-100 dark:border-gray-800">
-             <div className="bg-gray-50 dark:bg-[#112240] rounded-2xl p-8 text-center">
-                 <h3 className="text-2xl font-bold mb-4 text-gray-900 dark:text-white">Bạn cần tư vấn về vấn đề này?</h3>
-                 <p className="text-gray-600 dark:text-gray-400 mb-6">Liên hệ ngay với chuyên gia của VIT DIGITAL để được hỗ trợ giải đáp miễn phí.</p>
-                 <Link to="/lien-he" className="inline-block px-8 py-3 bg-secondary text-dark font-bold rounded-lg shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-1">
-                     Nhận Tư Vấn Ngay
-                 </Link>
-             </div>
+          <div className="bg-gradient-to-r from-secondary/10 to-accent/10 dark:from-secondary/5 dark:to-accent/5 rounded-2xl p-8 text-center border border-gray-200 dark:border-gray-700">
+            <h3 className="text-2xl font-bold mb-4 text-gray-900 dark:text-white">Bạn cần tư vấn về vấn đề này?</h3>
+            <p className="text-gray-600 dark:text-gray-400 mb-6">Liên hệ ngay với chuyên gia của VIT DIGITAL để được hỗ trợ giải đáp miễn phí.</p>
+            <Link to="/lien-he" className="inline-block px-8 py-4 bg-accent text-white font-bold rounded-full shadow-lg hover:shadow-accent/40 transition-all transform hover:-translate-y-1">
+              Nhận Tư Vấn Ngay
+            </Link>
+          </div>
+        </div>
+
+        {/* Related Posts (Optional) */}
+        <div className="mt-16">
+          <h3 className="text-2xl font-bold mb-8 text-gray-900 dark:text-white">Bài viết liên quan</h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {newsData.filter(item => item.id !== post.id && item.category === post.category).slice(0, 2).map((relatedPost) => (
+              <Link key={relatedPost.id} to={`/tin-tuc/${relatedPost.id}`} className="group flex gap-4 p-4 bg-gray-50 dark:bg-[#112240] rounded-xl hover:shadow-lg transition-all border border-gray-200 dark:border-gray-700">
+                <img src={relatedPost.image} alt={relatedPost.title} className="w-24 h-24 object-cover rounded-lg shrink-0" />
+                <div>
+                  <h4 className="font-bold text-gray-900 dark:text-white group-hover:text-secondary transition-colors line-clamp-2 mb-2">{relatedPost.title}</h4>
+                  <p className="text-xs text-gray-500 dark:text-gray-400">{relatedPost.date} • {relatedPost.readTime}</p>
+                </div>
+              </Link>
+            ))}
+          </div>
         </div>
 
       </div>

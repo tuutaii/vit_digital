@@ -20,15 +20,15 @@ const Footer = () => {
                   <div className="mb-8 space-y-4 text-sm leading-relaxed">
                      <p className="flex items-start gap-3 group">
                         <MapPin size={20} className="text-accent shrink-0 mt-1 group-hover:scale-110 transition-transform" />
-                        <span className="group-hover:text-gray-900 dark:group-hover:text-white transition-colors">{t('companyAddress')}</span>
+                        <span className="group-hover:text-accent dark:group-hover:text-accent transition-colors">{t('companyAddress')}</span>
                      </p>
                      <p className="flex items-center gap-3 group">
                         <Phone size={20} className="text-accent shrink-0 group-hover:scale-110 transition-transform" />
-                        <span className="font-medium group-hover:text-gray-900 dark:group-hover:text-white transition-colors">{t('companyPhone')}</span>
+                        <span className="font-medium group-hover:text-accent dark:group-hover:text-accent transition-colors">{t('companyPhone')}</span>
                      </p>
                      <p className="flex items-center gap-3 group">
                         <Mail size={20} className="text-accent shrink-0 group-hover:scale-110 transition-transform" />
-                        <span className="group-hover:text-gray-900 dark:group-hover:text-white transition-colors">{t('companyEmail')}</span>
+                        <span className="group-hover:text-accent dark:group-hover:text-accent transition-colors">{t('companyEmail')}</span>
                      </p>
                   </div>
 
