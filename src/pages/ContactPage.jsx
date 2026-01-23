@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { MapPin, Phone, Mail, Send, ChevronDown, CheckCircle, Loader2 } from 'lucide-react';
 import { useApp } from '../context/AppContext';
+import { motion } from 'framer-motion';
+import marketingConcept from '../assets/marketing_concept.png';
 
 const ContactPage = () => {
   const { t } = useApp();
@@ -40,69 +42,135 @@ const ContactPage = () => {
     }, 5000);
   };
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+        delayChildren: 0.2
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { y: 20, opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1,
+      transition: { duration: 0.5, ease: "easeOut" }
+    }
+  };
+
   return (
-    <div className="bg-white dark:bg-[#020c1b] min-h-screen pt-32 pb-20 transition-colors duration-300">
+    <div className="bg-gray-50 dark:bg-[#020c1b] min-h-screen pt-32 lg:pt-40 pb-20 transition-colors duration-300 relative overflow-hidden">
+      {/* Background Decor */}
+      <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-accent/5 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
+      <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-secondary/5 rounded-full blur-[80px] translate-y-1/3 -translate-x-1/3 pointer-events-none"></div>
+
+      {/* Pattern Overlay */}
+      <div className="absolute inset-0 opacity-[0.03] dark:opacity-[0.02] pointer-events-none" style={{
+        backgroundImage: 'radial-gradient(circle, #ff6b35 1px, transparent 1px)',
+        backgroundSize: '40px 40px'
+      }} />
+
       <div className="container mx-auto px-4 relative z-10">
-        <div className="flex flex-col lg:flex-row gap-12">
-          {/* Contact Info */}
-          <div className="w-full lg:w-1/3">
-            <span className="text-secondary font-medium tracking-wider uppercase text-sm">{t('getInTouch')}</span>
-            <h1 className="text-4xl lg:text-5xl font-serif font-bold mt-2 mb-6 text-gray-900 dark:text-white transition-colors">
-              {t('startProject')}
-            </h1>
-            <p className="text-gray-600 dark:text-gray-400 mb-8 leading-relaxed transition-colors text-lg font-light">
-              {t('contactDesc')}
-            </p>
+        <motion.div
+          initial="hidden"
+          animate="visible"
+          variants={containerVariants}
+          className="flex flex-col lg:flex-row gap-12 lg:gap-16 items-start"
+        >
+          {/* Contact Info & Image */}
+          <div className="w-full lg:w-5/12 flex flex-col gap-8">
+            <motion.div variants={itemVariants}>
+              <span className="text-accent font-bold tracking-wider uppercase text-sm mb-2 block">{t('getInTouch')}</span>
+              <h1 className="text-4xl lg:text-5xl font-serif font-bold mb-4 text-gray-900 dark:text-white transition-colors leading-tight">
+                {t('startProject')}
+              </h1>
+              <p className="text-gray-700 dark:text-gray-300 mb-6 leading-relaxed transition-colors text-lg font-normal">
+                {t('contactDesc') || "Đừng để ý tưởng của bạn chỉ nằm trên giấy. Hãy chia sẻ với chúng tôi, và cùng nhau biến nó thành hiện thực rực rỡ."}
+              </p>
 
-            <div className="space-y-8">
-              <div className="flex items-start gap-4">
-                <div className="w-14 h-14 bg-secondary/10 dark:bg-accent/10 rounded-full flex items-center justify-center text-gray-900 dark:text-accent shrink-0">
-                  <MapPin size={28} />
+              <div className="p-6 bg-white dark:bg-[#112240] rounded-2xl shadow-lg border-l-4 border-accent mb-8">
+                <p className="text-gray-800 dark:text-gray-200 italic font-medium">
+                  "Sự thành công của bạn là niềm tự hào của chúng tôi. Hãy để chúng tôi đồng hành cùng bạn trên con đường chinh phục thị trường số."
+                </p>
+              </div>
+            </motion.div>
+
+            <motion.div variants={itemVariants} className="relative rounded-2xl overflow-hidden shadow-2xl rotate-1 hover:rotate-0 transition-transform duration-500 hidden lg:block">
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent z-10"></div>
+              <img
+                src={marketingConcept}
+                alt="Working together"
+                className="w-full h-64 object-cover"
+              />
+              <div className="absolute bottom-4 left-4 z-20 text-white">
+                <p className="font-bold text-lg">Hỗ trợ 24/7</p>
+                <p className="text-white/80 text-sm">Luôn sẵn sàng giải đáp mọi thắc mắc</p>
+              </div>
+            </motion.div>
+
+            <motion.div variants={containerVariants} className="space-y-4">
+              <div className="flex items-center gap-4 p-4 rounded-xl hover:bg-white/50 dark:hover:bg-white/5 transition-colors">
+                <div className="w-12 h-12 bg-accent rounded-full flex items-center justify-center text-white shrink-0 shadow-lg shadow-accent/30">
+                  <MapPin size={22} />
                 </div>
                 <div>
-                  <h4 className="text-xl text-gray-900 dark:text-white font-bold mb-1 transition-colors">{t('ourOffice')}</h4>
-                  <p className="text-gray-600 dark:text-gray-400 transition-colors">123 Business Avenue, Tech District, HCM City, Vietnam</p>
+                  <p className="text-sm text-gray-500 dark:text-gray-400 font-medium uppercase tracking-wider mb-1">{t('ourOffice')}</p>
+                  <p className="text-gray-900 dark:text-white font-bold leading-tight">123 Business Avenue, Tech District, <br />HCM City, Vietnam</p>
                 </div>
               </div>
 
-              <div className="flex items-start gap-4">
-                <div className="w-14 h-14 bg-secondary/10 dark:bg-accent/10 rounded-full flex items-center justify-center text-gray-900 dark:text-accent shrink-0">
-                  <Phone size={28} />
+              <div className="flex items-center gap-4 p-4 rounded-xl hover:bg-white/50 dark:hover:bg-white/5 transition-colors">
+                <div className="w-12 h-12 bg-accent rounded-full flex items-center justify-center text-white shrink-0 shadow-lg shadow-accent/30">
+                  <Phone size={22} />
                 </div>
                 <div>
-                  <h4 className="text-xl text-gray-900 dark:text-white font-bold mb-1 transition-colors">{t('phone')}</h4>
-                  <p className="text-gray-600 dark:text-gray-400 transition-colors text-lg font-medium">0966290789</p>
+                  <p className="text-sm text-gray-500 dark:text-gray-400 font-medium uppercase tracking-wider mb-1">{t('phone')}</p>
+                  <p className="text-gray-900 dark:text-white font-bold text-lg">0966 290 789</p>
                 </div>
               </div>
 
-              <div className="flex items-start gap-4">
-                <div className="w-14 h-14 bg-secondary/10 dark:bg-accent/10 rounded-full flex items-center justify-center text-gray-900 dark:text-accent shrink-0">
-                  <Mail size={28} />
+              <div className="flex items-center gap-4 p-4 rounded-xl hover:bg-white/50 dark:hover:bg-white/5 transition-colors">
+                <div className="w-12 h-12 bg-accent rounded-full flex items-center justify-center text-white shrink-0 shadow-lg shadow-accent/30">
+                  <Mail size={22} />
                 </div>
                 <div>
-                  <h4 className="text-xl text-gray-900 dark:text-white font-bold mb-1 transition-colors">{t('email')}</h4>
-                  <p className="text-gray-600 dark:text-gray-400 transition-colors">{t('companyEmail')}</p>
+                  <p className="text-sm text-gray-500 dark:text-gray-400 font-medium uppercase tracking-wider mb-1">{t('email')}</p>
+                  <p className="text-gray-900 dark:text-white font-bold">{t('companyEmail')}</p>
                 </div>
               </div>
-            </div>
+            </motion.div>
           </div>
 
           {/* Form */}
-          <div className="w-full lg:w-2/3 bg-white dark:bg-[#112240] p-8 md:p-12 rounded-xl shadow-2xl border border-gray-200 dark:border-gray-700 transition-colors duration-300 relative overflow-hidden">
-            <div className="absolute top-0 left-0 w-2 h-full bg-accent"></div>
+          <motion.div
+            variants={itemVariants}
+            className="w-full lg:w-7/12 bg-white dark:bg-[#112240] p-8 md:p-10 rounded-3xl shadow-2xl shadow-gray-200/50 dark:shadow-none border border-gray-100 dark:border-gray-700 transition-colors duration-300 relative overflow-hidden"
+          >
+            <div className="absolute top-0 left-0 w-1.5 h-full bg-gradient-to-b from-accent to-secondary"></div>
+
+            <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">{t('sendMessage')}</h3>
+            <p className="text-gray-500 dark:text-gray-400 mb-8">Điền thông tin bên dưới và chúng tôi sẽ phản hồi trong vòng 24h.</p>
 
             {/* Success Message */}
             {submitSuccess && (
-              <div className="mb-6 p-4 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-xl flex items-center gap-3 animate-in fade-in slide-in-from-top-2 duration-300">
+              <motion.div
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="mb-8 p-4 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-xl flex items-center gap-3"
+              >
                 <CheckCircle className="text-green-600 dark:text-green-400" size={24} />
                 <p className="text-green-800 dark:text-green-200 font-medium">{t('messageSent')}</p>
-              </div>
+              </motion.div>
             )}
 
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-2">
-                  <label htmlFor="name" className="text-sm font-bold text-gray-700 dark:text-gray-300 transition-colors uppercase tracking-wider">{t('fullName')}</label>
+                  <label htmlFor="name" className="text-xs font-bold text-gray-900 dark:text-gray-200 transition-colors uppercase tracking-widest ml-1">{t('fullName')}</label>
                   <input
                     type="text"
                     id="name"
@@ -110,13 +178,13 @@ const ContactPage = () => {
                     value={formData.name}
                     onChange={handleChange}
                     disabled={isSubmitting}
-                    className="w-full px-5 py-4 rounded-xl border border-gray-200 dark:border-gray-600 bg-gray-50 dark:bg-[#0a192f] text-gray-900 dark:text-white focus:border-accent focus:ring-2 focus:ring-accent/20 outline-none transition-all placeholder-gray-400 dark:placeholder-gray-500 shadow-inner disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="w-full px-5 py-4 rounded-xl border border-gray-200 dark:border-gray-600 bg-gray-50 dark:bg-[#0a192f] text-gray-900 dark:text-white focus:border-accent focus:bg-white dark:focus:bg-[#0a192f] focus:ring-4 focus:ring-accent/10 outline-none transition-all placeholder-gray-400 font-medium shadow-sm hover:border-gray-300 dark:hover:border-gray-500"
                     placeholder={t('phName')}
                     required
                   />
                 </div>
                 <div className="space-y-2">
-                  <label htmlFor="email" className="text-sm font-bold text-gray-700 dark:text-gray-300 transition-colors uppercase tracking-wider">{t('emailAddress')}</label>
+                  <label htmlFor="email" className="text-xs font-bold text-gray-900 dark:text-gray-200 transition-colors uppercase tracking-widest ml-1">{t('emailAddress')}</label>
                   <input
                     type="email"
                     id="email"
@@ -124,13 +192,13 @@ const ContactPage = () => {
                     value={formData.email}
                     onChange={handleChange}
                     disabled={isSubmitting}
-                    className="w-full px-5 py-4 rounded-xl border border-gray-200 dark:border-gray-600 bg-gray-50 dark:bg-[#0a192f] text-gray-900 dark:text-white focus:border-accent focus:ring-2 focus:ring-accent/20 outline-none transition-all placeholder-gray-400 dark:placeholder-gray-500 shadow-inner disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="w-full px-5 py-4 rounded-xl border border-gray-200 dark:border-gray-600 bg-gray-50 dark:bg-[#0a192f] text-gray-900 dark:text-white focus:border-accent focus:bg-white dark:focus:bg-[#0a192f] focus:ring-4 focus:ring-accent/10 outline-none transition-all placeholder-gray-400 font-medium shadow-sm hover:border-gray-300 dark:hover:border-gray-500"
                     placeholder={t('phEmail')}
                     required
                   />
                 </div>
                 <div className="space-y-2">
-                  <label htmlFor="phone" className="text-sm font-bold text-gray-700 dark:text-gray-300 transition-colors uppercase tracking-wider">{t('phoneNumber')}</label>
+                  <label htmlFor="phone" className="text-xs font-bold text-gray-900 dark:text-gray-200 transition-colors uppercase tracking-widest ml-1">{t('phoneNumber')}</label>
                   <input
                     type="tel"
                     id="phone"
@@ -138,13 +206,13 @@ const ContactPage = () => {
                     value={formData.phone}
                     onChange={handleChange}
                     disabled={isSubmitting}
-                    className="w-full px-5 py-4 rounded-xl border border-gray-200 dark:border-gray-600 bg-gray-50 dark:bg-[#0a192f] text-gray-900 dark:text-white focus:border-accent focus:ring-2 focus:ring-accent/20 outline-none transition-all placeholder-gray-400 dark:placeholder-gray-500 shadow-inner disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="w-full px-5 py-4 rounded-xl border border-gray-200 dark:border-gray-600 bg-gray-50 dark:bg-[#0a192f] text-gray-900 dark:text-white focus:border-accent focus:bg-white dark:focus:bg-[#0a192f] focus:ring-4 focus:ring-accent/10 outline-none transition-all placeholder-gray-400 font-medium shadow-sm hover:border-gray-300 dark:hover:border-gray-500"
                     placeholder={t('phPhone')}
                     required
                   />
                 </div>
                 <div className="space-y-2 relative">
-                  <label htmlFor="jobTitle" className="text-sm font-bold text-gray-700 dark:text-gray-300 transition-colors uppercase tracking-wider">{t('jobTitle')}</label>
+                  <label htmlFor="jobTitle" className="text-xs font-bold text-gray-900 dark:text-gray-200 transition-colors uppercase tracking-widest ml-1">{t('jobTitle')}</label>
                   <div className="relative">
                     <select
                       id="jobTitle"
@@ -152,7 +220,7 @@ const ContactPage = () => {
                       value={formData.jobTitle}
                       onChange={handleChange}
                       disabled={isSubmitting}
-                      className="w-full px-5 py-4 pr-12 rounded-xl border border-gray-200 dark:border-gray-600 bg-gray-50 dark:bg-[#0a192f] text-gray-900 dark:text-white focus:border-accent focus:ring-2 focus:ring-accent/20 outline-none transition-all appearance-none cursor-pointer shadow-inner font-medium text-base hover:border-gray-300 dark:hover:border-gray-500 disabled:opacity-50 disabled:cursor-not-allowed"
+                      className="w-full px-5 py-4 pr-12 rounded-xl border border-gray-200 dark:border-gray-600 bg-gray-50 dark:bg-[#0a192f] text-gray-900 dark:text-white focus:border-accent focus:bg-white dark:focus:bg-[#0a192f] focus:ring-4 focus:ring-accent/10 outline-none transition-all appearance-none cursor-pointer shadow-sm font-medium hover:border-gray-300 dark:hover:border-gray-500"
                     >
                       <option value="">{t('selectJobTitle')}</option>
                       <option value="owner">{t('jobOwner')}</option>
@@ -161,13 +229,13 @@ const ContactPage = () => {
                       <option value="freelancer">{t('jobFreelancer')}</option>
                       <option value="other">{t('jobOther')}</option>
                     </select>
-                    <ChevronDown className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 pointer-events-none" size={20} />
+                    <ChevronDown className="absolute right-4 top-1/2 transform -translate-y-1/6 text-gray-500 pointer-events-none" size={20} />
                   </div>
                 </div>
               </div>
 
               <div className="space-y-2 relative">
-                <label htmlFor="subject" className="text-sm font-bold text-gray-700 dark:text-gray-300 transition-colors uppercase tracking-wider">{t('subject')}</label>
+                <label htmlFor="subject" className="text-xs font-bold text-gray-900 dark:text-gray-200 transition-colors uppercase tracking-widest ml-1">{t('subject')}</label>
                 <div className="relative">
                   <select
                     id="subject"
@@ -175,7 +243,7 @@ const ContactPage = () => {
                     value={formData.subject}
                     onChange={handleChange}
                     disabled={isSubmitting}
-                    className="w-full px-5 py-4 pr-10 rounded-xl border border-gray-200 dark:border-gray-600 bg-gray-50 dark:bg-[#0a192f] text-gray-900 dark:text-white focus:border-accent focus:ring-2 focus:ring-accent/20 outline-none transition-all appearance-none cursor-pointer shadow-inner disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="w-full px-5 py-4 pr-10 rounded-xl border border-gray-200 dark:border-gray-600 bg-gray-50 dark:bg-[#0a192f] text-gray-900 dark:text-white focus:border-accent focus:bg-white dark:focus:bg-[#0a192f] focus:ring-4 focus:ring-accent/10 outline-none transition-all appearance-none cursor-pointer shadow-sm font-medium hover:border-gray-300 dark:hover:border-gray-500"
                   >
                     <option value="">{t('selectSubject')}</option>
                     <option value="marketing_tong_the">{t('subjMarketing')}</option>
@@ -186,12 +254,12 @@ const ContactPage = () => {
                     <option value="website">{t('subjWeb')}</option>
                     <option value="khac">{t('subjOther')}</option>
                   </select>
-                  <ChevronDown className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 pointer-events-none" size={20} />
+                  <ChevronDown className="absolute right-4 top-1/2 transform -translate-y-1/6 text-gray-500 pointer-events-none" size={20} />
                 </div>
               </div>
 
               <div className="space-y-2">
-                <label htmlFor="message" className="text-sm font-bold text-gray-700 dark:text-gray-300 transition-colors uppercase tracking-wider">{t('message')}</label>
+                <label htmlFor="message" className="text-xs font-bold text-gray-900 dark:text-gray-200 transition-colors uppercase tracking-widest ml-1">{t('message')}</label>
                 <textarea
                   id="message"
                   name="message"
@@ -199,7 +267,7 @@ const ContactPage = () => {
                   onChange={handleChange}
                   disabled={isSubmitting}
                   rows="5"
-                  className="w-full px-5 py-4 rounded-xl border border-gray-200 dark:border-gray-600 bg-gray-50 dark:bg-[#0a192f] text-gray-900 dark:text-white focus:border-accent focus:ring-2 focus:ring-accent/20 outline-none transition-all placeholder-gray-400 dark:placeholder-gray-500 resize-none shadow-inner disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="w-full px-5 py-4 rounded-xl border border-gray-200 dark:border-gray-600 bg-gray-50 dark:bg-[#0a192f] text-gray-900 dark:text-white focus:border-accent focus:bg-white dark:focus:bg-[#0a192f] focus:ring-4 focus:ring-accent/10 outline-none transition-all placeholder-gray-400 resize-none shadow-sm font-medium hover:border-gray-300 dark:hover:border-gray-500"
                   placeholder={t('phMessage')}
                   required
                 ></textarea>
@@ -208,22 +276,25 @@ const ContactPage = () => {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full py-4 bg-accent text-white font-bold rounded-xl hover:bg-accent-hover shadow-lg hover:shadow-accent/40 transition-all transform hover:-translate-y-1 flex items-center justify-center gap-2 text-lg uppercase tracking-wide disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+                className="w-full py-4 bg-gradient-to-r from-accent to-accent/90 text-white font-bold rounded-xl hover:shadow-xl hover:shadow-accent/20 transition-all transform hover:-translate-y-1 flex items-center justify-center gap-2 text-lg uppercase tracking-wider relative overflow-hidden group"
               >
-                {isSubmitting ? (
-                  <>
-                    <Loader2 className="animate-spin" size={24} />
-                    Đang gửi...
-                  </>
-                ) : (
-                  <>
-                    {t('sendMessage')} <Send size={24} />
-                  </>
-                )}
+                <span className="relative z-10 flex items-center justify-center gap-2">
+                  {isSubmitting ? (
+                    <>
+                      <Loader2 className="animate-spin" size={24} />
+                      Đang gửi...
+                    </>
+                  ) : (
+                    <>
+                      {t('sendMessage')} <Send size={24} className="group-hover:translate-x-1 transition-transform" />
+                    </>
+                  )}
+                </span>
+                <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
               </button>
             </form>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
       </div>
     </div>
   );

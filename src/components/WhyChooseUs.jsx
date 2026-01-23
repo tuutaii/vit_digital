@@ -34,9 +34,17 @@ const WhyChooseUs = () => {
     ];
 
     return (
-        <section className="py-24 bg-white dark:bg-primary transition-colors duration-300 relative overflow-hidden">
-            {/* Decorative Blob */}
-            <div className="absolute top-1/2 left-0 w-[500px] h-[500px] bg-secondary/5 rounded-full blur-[100px] -translate-y-1/2 pointer-events-none"></div>
+        <section className="py-24 bg-gradient-to-br from-orange-50/30 via-white to-blue-50/20 dark:bg-primary transition-colors duration-300 relative overflow-hidden">
+            {/* Background Pattern */}
+            <div className="absolute inset-0 opacity-[0.025] dark:opacity-[0.015]" style={{
+                backgroundImage: 'radial-gradient(circle, #ff6b35 1px, transparent 1px)',
+                backgroundSize: '40px 40px'
+            }} />
+
+            {/* Decorative Blobs */}
+            <div className="absolute top-1/2 left-0 w-[500px] h-[500px] bg-gradient-to-r from-secondary/10 to-orange-200/15 rounded-full blur-[100px] -translate-y-1/2 pointer-events-none animate-pulse" style={{ animationDuration: '6s' }} />
+            <div className="absolute top-20 right-0 w-[400px] h-[400px] bg-gradient-to-l from-blue-200/10 to-purple-200/10 rounded-full blur-[90px] pointer-events-none" />
+            <div className="absolute bottom-20 right-1/4 w-[300px] h-[300px] bg-gradient-to-br from-accent/5 to-orange-300/10 rounded-full blur-[80px] pointer-events-none" />
 
             <div className="container mx-auto px-6 relative z-10">
                 <div className="flex flex-col lg:flex-row gap-16 items-center">

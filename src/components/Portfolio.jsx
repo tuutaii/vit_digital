@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ExternalLink } from 'lucide-react';
+import FloatingIcons from './FloatingIcons';
 import { useApp } from '../context/AppContext';
 
 const categories = ['All', 'Website', 'Marketing', 'Branding'];
@@ -59,8 +60,19 @@ const Portfolio = () => {
     : projects.filter(project => project.category === activeCategory);
 
   return (
-    <section id="portfolio" className="py-24 bg-white dark:bg-dark transition-colors duration-300">
-      <div className="container mx-auto px-6">
+    <section id="portfolio" className="py-24 bg-gradient-to-b from-white via-blue-50/20 to-white dark:bg-dark transition-colors duration-300 relative overflow-hidden">
+      {/* Background Pattern */}
+      <div className="absolute inset-0 opacity-[0.02] dark:opacity-[0.01]" style={{
+        backgroundImage: 'linear-gradient(#000 1px, transparent 1px), linear-gradient(90deg, #000 1px, transparent 1px)',
+        backgroundSize: '50px 50px'
+      }} />
+
+      {/* Decorative Blobs */}
+      <div className="absolute top-20 right-10 w-72 h-72 bg-gradient-to-br from-blue-200/20 to-purple-200/20 rounded-full blur-[100px] pointer-events-none" />
+      <div className="absolute bottom-20 left-10 w-96 h-96 bg-gradient-to-tr from-orange-100/20 to-pink-100/20 rounded-full blur-[120px] pointer-events-none" />
+
+      <FloatingIcons section="portfolio" />
+      <div className="container mx-auto px-6 relative z-10">
         <div className="text-center mb-16">
           <span className="text-accent font-semibold tracking-widest uppercase text-sm bg-accent/10 py-1 px-3 rounded-full">{t('ourWork')}</span>
           <h2 className="text-4xl md:text-5xl font-bold mt-4 mb-8 text-gray-900 dark:text-white font-serif">{t('featuredProjects')}</h2>

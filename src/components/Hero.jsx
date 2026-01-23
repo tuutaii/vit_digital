@@ -11,9 +11,17 @@ const Hero = () => {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-24 pb-12 lg:pt-32">
       {/* Background Elements */}
-      <div className="absolute top-0 left-0 w-full h-full bg-white dark:bg-primary z-0 transition-colors duration-300">
-        <div className="absolute top-[-10%] right-[-5%] w-[600px] h-[600px] bg-secondary/20 rounded-full blur-[120px] opacity-60" />
-        <div className="absolute bottom-[-10%] left-[-10%] w-[700px] h-[700px] bg-accent/10 rounded-full blur-[140px] opacity-50" />
+      <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-gray-50 via-white to-orange-50/30 dark:bg-primary z-0 transition-colors duration-300">
+        {/* Dot Pattern Overlay */}
+        <div className="absolute inset-0 opacity-[0.03] dark:opacity-[0.02]" style={{
+          backgroundImage: 'radial-gradient(circle, #000 1px, transparent 1px)',
+          backgroundSize: '30px 30px'
+        }} />
+
+        {/* Gradient Blobs */}
+        <div className="absolute top-[-10%] right-[-5%] w-[600px] h-[600px] bg-gradient-to-br from-secondary/20 to-accent/10 rounded-full blur-[120px] opacity-60 animate-pulse" style={{ animationDuration: '8s' }} />
+        <div className="absolute bottom-[-10%] left-[-10%] w-[700px] h-[700px] bg-gradient-to-tr from-accent/15 via-orange-200/20 to-transparent rounded-full blur-[140px] opacity-50" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-gradient-to-r from-blue-100/10 to-purple-100/10 rounded-full blur-[100px] opacity-40" />
       </div>
 
       <div className="container mx-auto px-6 z-10 flex flex-col lg:flex-row items-center gap-12 lg:gap-20">

@@ -2,6 +2,7 @@ import React from 'react';
 import { Calendar, User, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useApp } from '../context/AppContext';
+import FloatingIcons from './FloatingIcons';
 
 const posts = [
   {
@@ -37,8 +38,19 @@ const Blog = () => {
   const { t } = useApp();
 
   return (
-    <section id="blog" className="py-24 bg-gray-50 dark:bg-[#0a192f] transition-colors duration-300">
-      <div className="container mx-auto px-6">
+    <section id="blog" className="py-24 bg-gradient-to-br from-gray-50 via-purple-50/20 to-blue-50/30 dark:bg-[#0a192f] transition-colors duration-300 relative overflow-hidden">
+      {/* Background Pattern */}
+      <div className="absolute inset-0 opacity-[0.02] dark:opacity-[0.01]" style={{
+        backgroundImage: 'repeating-linear-gradient(45deg, #000 0, #000 1px, transparent 0, transparent 50%)',
+        backgroundSize: '40px 40px'
+      }} />
+
+      {/* Decorative Blobs */}
+      <div className="absolute top-20 left-20 w-[450px] h-[450px] bg-gradient-to-br from-purple-200/20 to-blue-200/15 rounded-full blur-[110px] pointer-events-none" />
+      <div className="absolute bottom-10 right-10 w-[500px] h-[500px] bg-gradient-to-tl from-pink-200/15 to-orange-200/20 rounded-full blur-[120px] pointer-events-none animate-pulse" style={{ animationDuration: '9s' }} />
+
+      <FloatingIcons section="growth" />
+      <div className="container mx-auto px-6 relative z-10">
         <div className="flex flex-col md:flex-row justify-between items-end mb-16">
           <div>
             <span className="text-accent font-semibold tracking-widest uppercase text-sm bg-accent/10 py-1 px-3 rounded-full">{t('latestNews')}</span>
@@ -51,7 +63,7 @@ const Blog = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {posts.map((post) => (
-            <article key={post.id} className="group bg-white dark:bg-[#112240] rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl border border-gray-100 dark:border-gray-800 transition-all duration-300 hover:-translate-y-2 flex flex-col h-full">
+            <article key={post.id} className="group bg-white/90 dark:bg-[#112240]/90 backdrop-blur-sm rounded-3xl overflow-hidden shadow-xl hover:shadow-2xl hover:shadow-purple-500/10 border border-gray-200/50 dark:border-gray-800 transition-all duration-300 hover:-translate-y-2 flex flex-col h-full">
               {/* Image */}
               <div className="h-60 overflow-hidden relative shrink-0">
                 <div className="absolute top-4 left-4 bg-accent text-white text-xs font-bold px-3 py-1 rounded-full shadow-md z-10 uppercase tracking-wider backdrop-blur-md bg-accent/90">

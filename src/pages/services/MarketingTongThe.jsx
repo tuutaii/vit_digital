@@ -29,6 +29,22 @@ const MarketingTongThe = () => {
         <p>
           Thay vì triển khai rời rạc, Marketing Tổng Thể tạo ra sức mạnh cộng hưởng, giúp thương hiệu hiện diện đồng nhất, chuyên nghiệp và "vây quanh" khách hàng tiềm năng ở mọi điểm chạm.
         </p>
+
+        <h3 className="text-xl font-bold mt-8 mb-4 text-gray-900 dark:text-white font-serif">Tại sao doanh nghiệp CẦN Marketing Tổng Thể?</h3>
+        <ul className="space-y-4">
+          <li className="flex items-start gap-3">
+            <CheckCircle className="w-6 h-6 text-accent mt-0.5 shrink-0" />
+            <span className="text-gray-700 dark:text-gray-300"><strong>Đồng bộ thông điệp:</strong> Khách hàng nhìn thấy thương hiệu nhất quán từ Google, Facebook đến Website, giúp xây dựng niềm tin nhanh chóng.</span>
+          </li>
+          <li className="flex items-start gap-3">
+            <CheckCircle className="w-6 h-6 text-accent mt-0.5 shrink-0" />
+            <span className="text-gray-700 dark:text-gray-300"><strong>Tối ưu hóa ngân sách (ROI):</strong> Không "bỏ trứng vào một giỏ". Phân bổ nguồn lực hợp lý để kênh này hỗ trợ kênh kia, giảm chi phí chuyển đổi khách hàng.</span>
+          </li>
+          <li className="flex items-start gap-3">
+            <CheckCircle className="w-6 h-6 text-accent mt-0.5 shrink-0" />
+            <span className="text-gray-700 dark:text-gray-300"><strong>Tăng trưởng bền vững:</strong> Sở hữu hệ thống đa kênh giúp doanh nghiệp không bị phụ thuộc vào sự thay đổi thuật toán của một nền tảng duy nhất.</span>
+          </li>
+        </ul>
       </>
     ),
     image: conceptImg
