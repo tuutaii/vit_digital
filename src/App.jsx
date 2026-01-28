@@ -17,6 +17,8 @@ import NewsDetail from './pages/NewsDetail';
 
 import ContactPage from './pages/ContactPage';
 import Pricing from './pages/Pricing';
+import PrivacyPolicy from './pages/PrivacyPolicy';
+import TermsOfService from './pages/TermsOfService';
 
 function App() {
   return (
@@ -30,6 +32,8 @@ function App() {
             <Route path="/bao-gia" element={<Pricing />} />
             <Route path="/tin-tuc" element={<News />} />
             <Route path="/tin-tuc/:id" element={<NewsDetail />} />
+            <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+            <Route path="/terms-of-service" element={<TermsOfService />} />
             <Route path="/dich-vu/marketing-tong-the" element={<MarketingTongThe />} />
             <Route path="/dich-vu/tu-van-chien-luoc" element={<ChienLuocMarketing />} />
             <Route path="/dich-vu/quang-cao" element={<QuangCao />} />

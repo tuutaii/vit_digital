@@ -1,8 +1,9 @@
 import React, { useEffect, useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { ChevronRight, CheckCircle, ArrowRight, Star } from 'lucide-react';
+import { ChevronRight, ArrowRight } from 'lucide-react';
 import { useApp } from '../context/AppContext';
+import { useSeoMetadata, getServiceSchema, JsonLd } from '../utils/seoUtils';
 
 const ModernServiceLayout = ({
     serviceName,
@@ -28,12 +29,17 @@ const ModernServiceLayout = ({
     const y = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
     const opacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
 
+    // SEO & Metadata
+    useSeoMetadata(heroTitle || serviceName, heroDescription);
+    const serviceSchema = getServiceSchema(serviceName || heroTitle, heroDescription, heroImage);
+
     useEffect(() => {
         window.scrollTo(0, 0);
     }, []);
 
     return (
-        <div className="bg-white dark:bg-[#020c1b] min-h-screen font-sans text-gray-800 dark:text-gray-200 transition-colors duration-300 relative pt-24 md:pt-40">
+        <article className="bg-white dark:bg-[#020c1b] min-h-screen font-sans text-gray-800 dark:text-gray-200 transition-colors duration-300 relative pt-24 md:pt-40">
+            <JsonLd schema={serviceSchema} />
 
             {/* 1. Hero Section (Parallax) */}
             <section ref={heroRef} className="relative h-[80vh] min-h-[600px] flex items-center justify-center overflow-hidden">
@@ -45,6 +51,8 @@ const ModernServiceLayout = ({
                         src={heroImage}
                         alt={serviceName}
                         className="w-full h-full object-cover"
+                        loading="eager"
+                        fetchPriority="high"
                     />
                     {/* Gradient Overlay */}
                     <div className="absolute inset-0 bg-gradient-to-b from-gray-900/60 via-gray-900/50 to-gray-900/90 mix-blend-multiply"></div>
@@ -59,14 +67,14 @@ const ModernServiceLayout = ({
                     >
                         {heroTitle}
                     </motion.h1>
-                    <motion.p
+                    <motion.h2 // Technically subtitle, but h2 is appropriate here in hierarchy if h1 is above
                         initial={{ opacity: 0, y: 30 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
-                        className="text-lg md:text-2xl font-light max-w-3xl mx-auto opacity-90 leading-relaxed"
+                        className="text-lg md:text-2xl font-light max-w-3xl mx-auto opacity-90 leading-relaxed block"
                     >
                         {heroDescription}
-                    </motion.p>
+                    </motion.h2>
                 </div>
 
                 {/* Scroll Indicator */}
@@ -74,6 +82,7 @@ const ModernServiceLayout = ({
                     animate={{ y: [0, 10, 0] }}
                     transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
                     className="absolute bottom-10 left-1/2 transform -translate-x-1/2 text-white/50"
+                    aria-hidden="true"
                 >
                     <div className="w-6 h-10 border-2 border-white/30 rounded-full flex justify-center pt-2">
                         <div className="w-1.5 h-1.5 bg-white rounded-full"></div>
@@ -82,23 +91,25 @@ const ModernServiceLayout = ({
             </section>
 
             {/* 2. Breadcrumbs */}
-            <div className="bg-gray-50 dark:bg-[#0a192f] border-b border-gray-200 dark:border-gray-800">
+            <nav aria-label="Breadcrumb" className="bg-gray-50 dark:bg-[#0a192f] border-b border-gray-200 dark:border-gray-800">
                 <div className="container mx-auto px-4 py-4">
-                    <nav className="flex text-sm text-gray-500 dark:text-gray-400">
-                        <Link to="/" className="hover:text-secondary dark:hover:text-accent transition-colors">Home</Link>
+                    <ol className="flex text-sm text-gray-500 dark:text-gray-400 list-none p-0 m-0">
+                        <li className="flex items-center">
+                            <Link to="/" className="hover:text-secondary dark:hover:text-accent transition-colors">Home</Link>
+                        </li>
                         {breadcrumbs.map((crumb, index) => (
-                            <React.Fragment key={index}>
-                                <ChevronRight size={16} className="mx-2" />
+                            <li key={index} className="flex items-center">
+                                <ChevronRight size={16} className="mx-2" aria-hidden="true" />
                                 {crumb.link ? (
                                     <Link to={crumb.link} className="hover:text-secondary dark:hover:text-accent transition-colors">{crumb.label}</Link>
                                 ) : (
-                                    <span className="text-gray-900 dark:text-white font-medium">{crumb.label}</span>
+                                    <span className="text-gray-900 dark:text-white font-medium" aria-current="page">{crumb.label}</span>
                                 )}
-                            </React.Fragment>
+                            </li>
                         ))}
-                    </nav>
+                    </ol>
                 </div>
-            </div>
+            </nav>
 
             {/* 3. Concept & Value (2 Columns) */}
             <section className="py-20 lg:py-28">
@@ -129,7 +140,7 @@ const ModernServiceLayout = ({
                             className="lg:w-1/2 relative"
                         >
                             <div className="relative rounded-2xl overflow-hidden shadow-2xl">
-                                <img src={conceptSection.image} alt={conceptSection.title} className="w-full h-auto object-cover transform hover:scale-105 transition-transform duration-700" />
+                                <img src={conceptSection.image} alt={conceptSection.title} className="w-full h-auto object-cover transform hover:scale-105 transition-transform duration-700" loading="lazy" />
                                 <div className="absolute inset-0 bg-gradient-to-tr from-black/20 to-transparent"></div>
                             </div>
                             {/* Decorative Blob */}
@@ -161,11 +172,11 @@ const ModernServiceLayout = ({
                             >
                                 <div className="absolute top-0 right-0 p-6 opacity-5 group-hover:opacity-20 transition-opacity transform group-hover:scale-125 duration-500">
                                     {/* Background Icon Effect */}
-                                    {React.cloneElement(item.icon, { size: 120 })}
+                                    {React.cloneElement(item.icon, { size: 120, "aria-hidden": "true" })}
                                 </div>
 
                                 <div className={`w-14 h-14 rounded-xl ${conceptColors.bg} ${conceptColors.main} flex items-center justify-center mb-6 shadow-sm group-hover:scale-110 transition-transform duration-300`}>
-                                    {item.icon}
+                                    {React.cloneElement(item.icon, { "aria-hidden": "true" })}
                                 </div>
 
                                 <h3 className="text-xl font-bold mb-3 text-gray-900 dark:text-white group-hover:text-accent transition-colors">
@@ -248,7 +259,7 @@ const ModernServiceLayout = ({
                                 className="flex flex-col items-center text-center"
                             >
                                 <div className="w-20 h-20 bg-white/10 rounded-2xl flex items-center justify-center mb-6 text-accent backdrop-blur-sm border border-white/10 group-hover:scale-110 transition-transform">
-                                    {usp.icon}
+                                    {React.cloneElement(usp.icon, { "aria-hidden": "true" })}
                                 </div>
                                 <h3 className="text-2xl font-bold mb-4">{usp.title}</h3>
                                 <p className="text-gray-400 leading-relaxed">{usp.desc}</p>
@@ -274,14 +285,17 @@ const ModernServiceLayout = ({
                                 to={cta.link || "/lien-he"}
                                 className="inline-flex items-center gap-2 px-10 py-5 bg-dark text-white font-bold rounded-full text-lg shadow-2xl hover:shadow-xl hover:-translate-y-1 transition-all"
                             >
-                                {cta.buttonText || t('getStarted')} <ArrowRight size={20} />
+                                {cta.buttonText || t('getStarted')} <ArrowRight size={20} aria-hidden="true" />
                             </Link>
+                            <p className="text-dark/60 text-sm mt-6">
+                                Bằng việc liên hệ, bạn đồng ý với <Link to="/privacy-policy" className="underline hover:text-white transition-colors">Chính Sách Bảo Mật</Link> của VIT DIGITAL.
+                            </p>
                         </div>
                     </div>
                 </div>
             </section>
 
-        </div>
+        </article>
     );
 };
 

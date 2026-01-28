@@ -13,7 +13,11 @@ const Footer = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-16 mb-16">
                {/* Brand & Info */}
                <div>
-                  <Link to="/#top" className="text-3xl font-bold font-serif mb-8 block group">
+                  <Link
+                     to="/"
+                     onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+                     className="text-3xl font-bold font-serif mb-8 block group"
+                  >
                      <span className="text-gray-900 dark:text-white">VIT </span>
                      <span className="text-accent group-hover:text-accent-hover transition-colors">DIGITAL</span>
                   </Link>
@@ -97,8 +101,8 @@ const Footer = () => {
             <div className="border-t border-gray-200 dark:border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center text-sm opacity-80">
                <p>&copy; 2024 VIT DIGITAL Agency. All rights reserved.</p>
                <div className="flex space-x-8 mt-4 md:mt-0">
-                  <a href="#" className="hover:text-accent transition-colors">{t('privacyPolicy')}</a>
-                  <a href="#" className="hover:text-accent transition-colors">{t('termsOfService')}</a>
+                  <Link to="/privacy-policy" className="hover:text-accent transition-colors">{t('privacyPolicy')}</Link>
+                  <Link to="/terms-of-service" className="hover:text-accent transition-colors">{t('termsOfService')}</Link>
                </div>
             </div>
          </div>

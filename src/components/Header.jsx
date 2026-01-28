@@ -75,10 +75,15 @@ const Header = () => {
       >
         <div className="container mx-auto px-6 flex justify-between items-center">
           {/* Logo */}
-          <HashLink smooth to="/#top" className="text-4xl md:text-5xl font-black font-serif flex items-center gap-0.5 group tracking-tighter leading-none">
+          {/* Logo */}
+          <Link
+            to="/"
+            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+            className="text-4xl md:text-5xl font-black font-serif flex items-center gap-0.5 group tracking-tighter leading-none"
+          >
             <span className="text-gray-900 dark:text-white group-hover:text-accent transition-colors drop-shadow-sm">VIT</span>
             <span className="text-accent drop-shadow-sm">DIGITAL</span>
-          </HashLink>
+          </Link>
 
           {/* Desktop Nav */}
           <nav className="hidden md:flex items-center space-x-10">

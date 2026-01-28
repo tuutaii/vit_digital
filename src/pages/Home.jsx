@@ -6,10 +6,16 @@ import Blog from '../components/Blog';
 import Contact from '../components/Contact';
 import WhyChooseUs from '../components/WhyChooseUs';
 import SectionDivider from '../components/SectionDivider';
+import { useSeoMetadata, getOrganizationSchema, JsonLd } from '../utils/seoUtils';
 
 const Home = () => {
+  useSeoMetadata('Trang Chủ', 'VIT DIGITAL - Giải pháp Marketing tổng thể cho doanh nghiệp SMEs. Tăng trưởng doanh thu đột phá với chiến lược SEO, Ads, Content chuyên nghiệp.');
+
+  const organizationSchema = getOrganizationSchema();
+
   return (
     <>
+      <JsonLd schema={organizationSchema} />
       <Hero />
       <SectionDivider variant="gradient" />
       <Services />

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { MapPin, Phone, Mail, Send, ChevronDown, CheckCircle, Loader2 } from 'lucide-react';
 import { useApp } from '../context/AppContext';
+import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import marketingConcept from '../assets/marketing_concept.png';
 
@@ -270,20 +271,35 @@ const Contact = () => {
                 ></textarea>
               </div>
 
+              <div className="flex items-start gap-3">
+                <div className="flex items-center h-5">
+                  <input
+                    id="privacy"
+                    name="privacy"
+                    type="checkbox"
+                    required
+                    className="w-4 h-4 rounded border-gray-300 text-accent focus:ring-accent accent-accent"
+                  />
+                </div>
+                <label htmlFor="privacy" className="text-sm text-gray-600 dark:text-gray-400">
+                  Tôi đồng ý với <Link to="/privacy-policy" className="text-accent hover:underline">Chính sách bảo mật</Link> và cho phép VIT DIGITAL liên hệ tư vấn.
+                </label>
+              </div>
+
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full py-4 bg-gradient-to-r from-accent to-accent/90 text-white font-bold rounded-xl hover:shadow-xl hover:shadow-accent/20 transition-all transform hover:-translate-y-1 flex items-center justify-center gap-2 text-lg uppercase tracking-wider relative overflow-hidden group"
+                className="w-full py-4 bg-gradient-to-r from-accent to-accent/90 text-white font-bold rounded-xl hover:shadow-xl hover:shadow-accent/20 transition-all transform hover:-translate-y-1 flex items-center justify-center gap-2 text-lg uppercase tracking-wider relative overflow-hidden group disabled:opacity-70 disabled:cursor-not-allowed"
               >
                 <span className="relative z-10 flex items-center justify-center gap-2">
                   {isSubmitting ? (
                     <>
-                      <Loader2 className="animate-spin" size={20} />
+                      <Loader2 className="animate-spin" size={20} aria-hidden="true" />
                       Đang gửi...
                     </>
                   ) : (
                     <>
-                      {t('sendMessage')} <Send size={20} className="group-hover:translate-x-1 transition-transform" />
+                      {t('sendMessage')} <Send size={20} className="group-hover:translate-x-1 transition-transform" aria-hidden="true" />
                     </>
                   )}
                 </span>
