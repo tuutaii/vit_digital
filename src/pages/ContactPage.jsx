@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { MapPin, Phone, Mail, Send, ChevronDown, CheckCircle, Loader2 } from 'lucide-react';
+import emailjs from '@emailjs/browser';
+import { EMAIL_CONFIG } from '../utils/emailConfig';
 import { useApp } from '../context/AppContext';
 import { motion } from 'framer-motion';
 import marketingConcept from '../assets/marketing_concept.png';
@@ -14,6 +16,8 @@ const ContactPage = () => {
     subject: '',
     message: ''
   });
+  const [errors, setErrors] = useState({});
+  const [submitError, setSubmitError] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
 
@@ -23,23 +27,99 @@ const ContactPage = () => {
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+    // Clear error when user types
+    if (errors[e.target.name]) {
+      setErrors({ ...errors, [e.target.name]: '' });
+    }
+  };
+
+  const validate = () => {
+    const newErrors = {};
+    if (!formData.name.trim()) newErrors.name = t('Vui lòng nhập họ tên');
+    if (!formData.email.trim()) {
+      newErrors.email = t('Vui lòng nhập email');
+    } else if (!/^\S+@\S+\.\S+$/.test(formData.email)) {
+      newErrors.email = t('Email không hợp lệ');
+    }
+    if (!formData.subject) newErrors.subject = t('Vui lòng chọn chủ đề');
+    if (!formData.message.trim()) newErrors.message = t('Vui lòng nhập nội dung');
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setSubmitError('');
+
+    if (!validate()) return;
+
     setIsSubmitting(true);
 
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1500));
+    // Map internal values to readable text
+    const subjectMapping = {
+      'marketing_tong_the': t('subjMarketing'),
+      'tu_van_chien_luoc': t('subjStrategy'),
+      'quang_cao': t('subjAds'),
+      'seo': t('subjSEO'),
+      'tiktok': t('subjTikTok'),
+      'website': t('subjWeb'),
+      'khac': t('subjOther')
+    };
 
-    setIsSubmitting(false);
-    setSubmitSuccess(true);
-    setFormData({ name: '', email: '', phone: '', jobTitle: '', subject: '', message: '' });
+    const jobTitleMapping = {
+      'owner': t('jobOwner'),
+      'manager': t('jobManager'),
+      'marketer': t('jobMarketer'),
+      'freelancer': t('jobFreelancer'),
+      'other': t('jobOther')
+    };
 
-    // Hide success message after 5 seconds
-    setTimeout(() => {
-      setSubmitSuccess(false);
-    }, 5000);
+    const now = new Date();
+    // Format: HH:mm - DD/MM/YYYY
+    const timeString = `${now.getHours()}:${String(now.getMinutes()).padStart(2, '0')} - ${String(now.getDate()).padStart(2, '0')}/${String(now.getMonth() + 1).padStart(2, '0')}/${now.getFullYear()}`;
+    console.log("Sending EmailJS Payload with time:", timeString);
+
+    try {
+      await emailjs.send(
+        EMAIL_CONFIG.SERVICE_ID,
+        EMAIL_CONFIG.TEMPLATE_ID,
+        {
+          // Send both formats to ensure compatibility with your EmailJS Template
+          from_name: formData.name,
+          name: formData.name, // Fallback common variable
+
+          from_email: formData.email,
+          email: formData.email, // Fallback common variable
+          reply_to: formData.email,
+
+          phone: formData.phone,
+
+          jobtitle: jobTitleMapping[formData.jobTitle] || formData.jobTitle,
+
+          subject: subjectMapping[formData.subject] || formData.subject, // Readable subject
+
+          message: `${formData.message}\n\n(Thời gian gửi: ${timeString})`, // Embed time in message to ensure visibility
+
+          senttime: timeString, // Keep matching template variable
+          sent_time: timeString, // Backup variable name
+        },
+        EMAIL_CONFIG.PUBLIC_KEY
+      );
+
+      setIsSubmitting(false);
+      setSubmitSuccess(true);
+      setFormData({ name: '', email: '', phone: '', jobTitle: '', subject: '', message: '' });
+
+      // Hide success message after 5 seconds
+      setTimeout(() => {
+        setSubmitSuccess(false);
+      }, 5000);
+    } catch (error) {
+      console.error('Email error:', error);
+      setIsSubmitting(false);
+      setSubmitError('Gửi tin nhắn thất bại. Vui lòng kiểm tra lại kết nối hoặc cấu hình.');
+    }
   };
 
   const containerVariants = {
@@ -119,7 +199,7 @@ const ContactPage = () => {
                 </div>
                 <div>
                   <p className="text-sm text-gray-500 dark:text-gray-400 font-medium uppercase tracking-wider mb-1">{t('ourOffice')}</p>
-                  <p className="text-gray-900 dark:text-white font-bold leading-tight">123 Business Avenue, Tech District, <br />HCM City, Vietnam</p>
+                  <p className="text-gray-900 dark:text-white font-bold leading-tight">{t('companyAddress')}</p>
                 </div>
               </div>
 
@@ -167,10 +247,12 @@ const ContactPage = () => {
               </motion.div>
             )}
 
-            <form onSubmit={handleSubmit} className="space-y-6">
+            <form onSubmit={handleSubmit} className="space-y-6" noValidate>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-2">
-                  <label htmlFor="name" className="text-xs font-bold text-gray-900 dark:text-gray-200 transition-colors uppercase tracking-widest ml-1">{t('fullName')}</label>
+                  <label htmlFor="name" className="text-xs font-bold text-gray-900 dark:text-gray-200 transition-colors uppercase tracking-widest ml-1">
+                    {t('fullName')} <span className="text-red-500">*</span>
+                  </label>
                   <input
                     type="text"
                     id="name"
@@ -178,13 +260,16 @@ const ContactPage = () => {
                     value={formData.name}
                     onChange={handleChange}
                     disabled={isSubmitting}
-                    className="w-full px-5 py-4 rounded-xl border border-gray-200 dark:border-gray-600 bg-gray-50 dark:bg-[#0a192f] text-gray-900 dark:text-white focus:border-accent focus:bg-white dark:focus:bg-[#0a192f] focus:ring-4 focus:ring-accent/10 outline-none transition-all placeholder-gray-400 font-medium shadow-sm hover:border-gray-300 dark:hover:border-gray-500"
+                    className={`w-full px-5 py-4 rounded-xl border ${errors.name ? 'border-red-500 ring-1 ring-red-500' : 'border-gray-200 dark:border-gray-600'} bg-gray-50 dark:bg-[#0a192f] text-gray-900 dark:text-white focus:border-accent focus:bg-white dark:focus:bg-[#0a192f] focus:ring-4 focus:ring-accent/10 outline-none transition-all placeholder-gray-400 font-medium shadow-sm hover:border-gray-300 dark:hover:border-gray-500`}
                     placeholder={t('phName')}
-                    required
                   />
+                  {errors.name && <p className="text-red-500 text-xs ml-1">{errors.name}</p>}
                 </div>
+
                 <div className="space-y-2">
-                  <label htmlFor="email" className="text-xs font-bold text-gray-900 dark:text-gray-200 transition-colors uppercase tracking-widest ml-1">{t('emailAddress')}</label>
+                  <label htmlFor="email" className="text-xs font-bold text-gray-900 dark:text-gray-200 transition-colors uppercase tracking-widest ml-1">
+                    {t('emailAddress')} <span className="text-red-500">*</span>
+                  </label>
                   <input
                     type="email"
                     id="email"
@@ -192,13 +277,16 @@ const ContactPage = () => {
                     value={formData.email}
                     onChange={handleChange}
                     disabled={isSubmitting}
-                    className="w-full px-5 py-4 rounded-xl border border-gray-200 dark:border-gray-600 bg-gray-50 dark:bg-[#0a192f] text-gray-900 dark:text-white focus:border-accent focus:bg-white dark:focus:bg-[#0a192f] focus:ring-4 focus:ring-accent/10 outline-none transition-all placeholder-gray-400 font-medium shadow-sm hover:border-gray-300 dark:hover:border-gray-500"
+                    className={`w-full px-5 py-4 rounded-xl border ${errors.email ? 'border-red-500 ring-1 ring-red-500' : 'border-gray-200 dark:border-gray-600'} bg-gray-50 dark:bg-[#0a192f] text-gray-900 dark:text-white focus:border-accent focus:bg-white dark:focus:bg-[#0a192f] focus:ring-4 focus:ring-accent/10 outline-none transition-all placeholder-gray-400 font-medium shadow-sm hover:border-gray-300 dark:hover:border-gray-500`}
                     placeholder={t('phEmail')}
-                    required
                   />
+                  {errors.email && <p className="text-red-500 text-xs ml-1">{errors.email}</p>}
                 </div>
+
                 <div className="space-y-2">
-                  <label htmlFor="phone" className="text-xs font-bold text-gray-900 dark:text-gray-200 transition-colors uppercase tracking-widest ml-1">{t('phoneNumber')}</label>
+                  <label htmlFor="phone" className="text-xs font-bold text-gray-900 dark:text-gray-200 transition-colors uppercase tracking-widest ml-1">
+                    {t('phoneNumber')}
+                  </label>
                   <input
                     type="tel"
                     id="phone"
@@ -208,11 +296,13 @@ const ContactPage = () => {
                     disabled={isSubmitting}
                     className="w-full px-5 py-4 rounded-xl border border-gray-200 dark:border-gray-600 bg-gray-50 dark:bg-[#0a192f] text-gray-900 dark:text-white focus:border-accent focus:bg-white dark:focus:bg-[#0a192f] focus:ring-4 focus:ring-accent/10 outline-none transition-all placeholder-gray-400 font-medium shadow-sm hover:border-gray-300 dark:hover:border-gray-500"
                     placeholder={t('phPhone')}
-                    required
                   />
                 </div>
+
                 <div className="space-y-2 relative">
-                  <label htmlFor="jobTitle" className="text-xs font-bold text-gray-900 dark:text-gray-200 transition-colors uppercase tracking-widest ml-1">{t('jobTitle')}</label>
+                  <label htmlFor="jobTitle" className="text-xs font-bold text-gray-900 dark:text-gray-200 transition-colors uppercase tracking-widest ml-1">
+                    {t('jobTitle')}
+                  </label>
                   <div className="relative">
                     <select
                       id="jobTitle"
@@ -235,7 +325,9 @@ const ContactPage = () => {
               </div>
 
               <div className="space-y-2 relative">
-                <label htmlFor="subject" className="text-xs font-bold text-gray-900 dark:text-gray-200 transition-colors uppercase tracking-widest ml-1">{t('subject')}</label>
+                <label htmlFor="subject" className="text-xs font-bold text-gray-900 dark:text-gray-200 transition-colors uppercase tracking-widest ml-1">
+                  {t('subject')} <span className="text-red-500">*</span>
+                </label>
                 <div className="relative">
                   <select
                     id="subject"
@@ -243,7 +335,7 @@ const ContactPage = () => {
                     value={formData.subject}
                     onChange={handleChange}
                     disabled={isSubmitting}
-                    className="w-full px-5 py-4 pr-10 rounded-xl border border-gray-200 dark:border-gray-600 bg-gray-50 dark:bg-[#0a192f] text-gray-900 dark:text-white focus:border-accent focus:bg-white dark:focus:bg-[#0a192f] focus:ring-4 focus:ring-accent/10 outline-none transition-all appearance-none cursor-pointer shadow-sm font-medium hover:border-gray-300 dark:hover:border-gray-500"
+                    className={`w-full px-5 py-4 pr-10 rounded-xl border ${errors.subject ? 'border-red-500 ring-1 ring-red-500' : 'border-gray-200 dark:border-gray-600'} bg-gray-50 dark:bg-[#0a192f] text-gray-900 dark:text-white focus:border-accent focus:bg-white dark:focus:bg-[#0a192f] focus:ring-4 focus:ring-accent/10 outline-none transition-all appearance-none cursor-pointer shadow-sm font-medium hover:border-gray-300 dark:hover:border-gray-500`}
                   >
                     <option value="">{t('selectSubject')}</option>
                     <option value="marketing_tong_the">{t('subjMarketing')}</option>
@@ -256,10 +348,13 @@ const ContactPage = () => {
                   </select>
                   <ChevronDown className="absolute right-4 top-1/2 transform -translate-y-1/6 text-gray-500 pointer-events-none" size={20} />
                 </div>
+                {errors.subject && <p className="text-red-500 text-xs ml-1">{errors.subject}</p>}
               </div>
 
               <div className="space-y-2">
-                <label htmlFor="message" className="text-xs font-bold text-gray-900 dark:text-gray-200 transition-colors uppercase tracking-widest ml-1">{t('message')}</label>
+                <label htmlFor="message" className="text-xs font-bold text-gray-900 dark:text-gray-200 transition-colors uppercase tracking-widest ml-1">
+                  {t('message')} <span className="text-red-500">*</span>
+                </label>
                 <textarea
                   id="message"
                   name="message"
@@ -267,16 +362,22 @@ const ContactPage = () => {
                   onChange={handleChange}
                   disabled={isSubmitting}
                   rows="5"
-                  className="w-full px-5 py-4 rounded-xl border border-gray-200 dark:border-gray-600 bg-gray-50 dark:bg-[#0a192f] text-gray-900 dark:text-white focus:border-accent focus:bg-white dark:focus:bg-[#0a192f] focus:ring-4 focus:ring-accent/10 outline-none transition-all placeholder-gray-400 resize-none shadow-sm font-medium hover:border-gray-300 dark:hover:border-gray-500"
+                  className={`w-full px-5 py-4 rounded-xl border ${errors.message ? 'border-red-500 ring-1 ring-red-500' : 'border-gray-200 dark:border-gray-600'} bg-gray-50 dark:bg-[#0a192f] text-gray-900 dark:text-white focus:border-accent focus:bg-white dark:focus:bg-[#0a192f] focus:ring-4 focus:ring-accent/10 outline-none transition-all placeholder-gray-400 resize-none shadow-sm font-medium hover:border-gray-300 dark:hover:border-gray-500`}
                   placeholder={t('phMessage')}
-                  required
                 ></textarea>
+                {errors.message && <p className="text-red-500 text-xs ml-1">{errors.message}</p>}
               </div>
+
+              {submitError && (
+                <div className="p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-xl flex items-center gap-3 animate-pulse">
+                  <p className="text-red-800 dark:text-red-200 text-sm font-medium mx-auto">{submitError}</p>
+                </div>
+              )}
 
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full py-4 bg-gradient-to-r from-accent to-accent/90 text-white font-bold rounded-xl hover:shadow-xl hover:shadow-accent/20 transition-all transform hover:-translate-y-1 flex items-center justify-center gap-2 text-lg uppercase tracking-wider relative overflow-hidden group"
+                className="w-full py-4 bg-gradient-to-r from-accent to-accent/90 text-white font-bold rounded-xl hover:shadow-xl hover:shadow-accent/20 transition-all transform hover:-translate-y-1 flex items-center justify-center gap-2 text-lg uppercase tracking-wider relative overflow-hidden group disabled:opacity-70 disabled:cursor-not-allowed"
               >
                 <span className="relative z-10 flex items-center justify-center gap-2">
                   {isSubmitting ? (

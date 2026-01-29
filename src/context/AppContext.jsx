@@ -101,9 +101,9 @@ export const AppProvider = ({ children }) => {
       viewAllPosts: 'View All Posts',
       readMore: 'Read More',
       // Footer/General
-      companyAddress: '123 Business Avenue, Tech District, HCM City, Vietnam',
+      companyAddress: 'Tổ 2, khu phố Thanh Tân, Phường An Lộc, Tỉnh Đồng Nai, Việt Nam',
       companyPhone: '0966 290 789',
-      companyEmail: 'hello@vitdigital.vn',
+      companyEmail: 'vitdigitalagency@gmail.com',
       newsletterTitle: 'Newsletter',
       subscribeBtn: 'Subscribe',
       emailPlaceholder: 'Email address',
@@ -309,9 +309,9 @@ export const AppProvider = ({ children }) => {
       viewAllPosts: 'Xem Tất Cả Bài Viết',
       readMore: 'Đọc Thêm',
       // Footer/General
-      companyAddress: '123 Business Avenue, Tech District, TP.HCM, Việt Nam',
+      companyAddress: 'Tổ 2, khu phố Thanh Tân, Phường An Lộc, Tỉnh Đồng Nai, Việt Nam',
       companyPhone: '0966 290 789',
-      companyEmail: 'hello@vitdigital.vn',
+      companyEmail: 'vitdigitalagency@gmail.com',
       newsletterTitle: 'Bản Tin',
       subscribeBtn: 'Đăng Ký',
       emailPlaceholder: 'Địa chỉ Email',

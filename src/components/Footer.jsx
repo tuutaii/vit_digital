@@ -85,7 +85,13 @@ const Footer = () => {
                      <span className="absolute -bottom-2 left-0 w-12 h-1 bg-accent rounded-full"></span>
                   </h4>
                   <p className="text-sm mb-6 leading-relaxed">{t('subscribeNewsletter')}</p>
-                  <form className="flex flex-col gap-3">
+                  <form
+                     className="flex flex-col gap-3"
+                     onSubmit={(e) => {
+                        e.preventDefault();
+                        alert("Hệ thống đang cập nhật");
+                     }}
+                  >
                      <input
                         type="email"
                         placeholder={t('emailPlaceholder')}
